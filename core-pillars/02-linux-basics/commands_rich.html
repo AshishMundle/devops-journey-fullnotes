@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Linux Mastery - Nitesh Dudhe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code&family=Inter:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --accent: #58a6ff;
+            --text: #c9d1d9;
+            --cmd: #7ee787;
+            --tip: #ffa657;
+            --border: #30363d;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            padding: 51px 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 30px;
+        }
+
+        h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        .purpose {
+            color: var(--accent);
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        h2 {
+            color: white;
+            margin-top: 40px;
+            border-left: 5px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .cmd-name {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.4rem;
+            color: var(--cmd);
+            margin-bottom: 10px;
+        }
+
+        .explanation {
+            font-size: 0.95rem;
+            color: #8b949e;
+            margin-bottom: 15px;
+            white-space: pre-line;
+        }
+
+        .exec-box {
+            background: #010409;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+        }
+
+        .exec-line {
+            color: #d2a8ff;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .exec-line::before {
+            content: "$ ";
+            color: #484f58;
+        }
+
+        .tip-card {
+            border-left: 4px solid var(--tip);
+        }
+
+        .tip-title {
+            color: var(--tip);
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Container for the row */
+        .cmd-row {
+            position: relative;
+            display: block;
+            padding: 5px 0;
+        }
+
+        /* The clickable word */
+        .hover-trigger {
+            cursor: help;
+            font-weight: bold;
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        /* The hidden GIF container */
+        .gif-preview {
+            display: none;
+            /* Hidden by default */
+            position: absolute;
+            left: 150px;
+            /* Adjust based on where you want the GIF to appear */
+            top: 0;
+            z-index: 1000;
+            border: 2px solid #333;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .gif-preview img {
+            width: 200px;
+            /* Set your preferred width */
+            height: auto;
+            display: block;
+        }
+
+        /* Show the GIF on hover */
+        .cmd-row:hover .gif-preview {
+            display: block;
+        }
+    </style>
+</head>
+<!-- https://github.com/niteshdudhe/beyond-the-basics-linux-terminal -->
+<!-- Description: This is a single HTML page that contains all the commands and their usage. -->
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Linux Terminal Mastery (Beyond the basics)</h1>
+            <p class="purpose">By Nitesh Dudhe</p>
+            <p class="explanation">Connect with me on <a href="https://www.linkedin.com/in/nitesh-dudhe/"
+                    target="_blank">LinkedIn</a></p>
+        </header>
+        <h2>Mastery Commands</h2>
+        <div class="grid">
+
+            <div class="card">
+                <div class="cmd-name">cut</div>
+                <div class="explanation">Extract specific fields or characters from each line of input.
+                </div>
+                <div class="exec-box"><span class="exec-line">echo "root:x:0:0:root:/root:/bin/bash" | cut -d':'
+                        -f1,7</span><span class="exec-line">grep `user` /etc/passwd | cut -d':' -f1,6,7</span></div>
+            </div>
+
+            <div class="card">
+                <div class="cmd-name">sort</div>
+                <div class="explanation">Sort lines of text files alphabetically, numerically, or by field.
+                </div>
+                <div class="exec-box"><span class="exec-line">ps -ef | sort -k3 -nr | head -5</span><span
+                        class="exec-line">cat dummy.log | cut -d'|' -f2 | sort</span></div>
+            </div>
+
+            <div class="card">
+                <div class="cmd-name">uniq</div>
+                <div class="explanation">Report or omit repeated lines. Works best after sort.
+                </div>
+                <div class="exec-box"><span class="exec-line">cat dummy.log | cut -d'|' -f2 | sort | uniq</span></div>
+            </div>
+
+            <div class="card">
+                <div class="cmd-name">watch</div>
+                <div class="explanation">Run a program repeatedly, displaying output & errors. Great for real-time
+                    monitoring.
+                </div>
+                <div class="exec-box"><span class="exec-line">watch -n 1 -d 'df -h | grep /dev/nvme1n1p2'</span></div>
+            </div>
+
+            <div class="card">
+                <div class="cmd-name">tee</div>
+                <div class="explanation">Read from stdin and write to stdout and files simultaneously.
+                </div>
+                <div class="exec-box"><span class="exec-line">./script.sh | tee script_execution.log</span></div>
+            </div>
+
+            <div class="card">
+                <div class="cmd-name">which</div>
+                <div class="explanation">`which` finds the first match in PATH.
+                </div>
+                <div class="exec-box"><span class="exec-line">which python3</span><span class="exec-line">which
+                        nginx</span></div>
+            </div>
+
+            <div class="card">
+                <div class="cmd-name">whereis</div>
+                <div class="explanation">`whereis` finds binary, source, and man pages.
+                </div>
+                <div class="exec-box"><span class="exec-line">whereis python3</span></div>
+            </div>
+
+            <div class="card">
+                <div class="cmd-name">file</div>
+                <div class="explanation">Tests each argument and classifies it — never trust file extensions.
+                </div>
+                <div class="exec-box"><span class="exec-line">file mystery_file</span><span class="exec-line">file
+                        /path/to/mystery_file</span></div>
+            </div>
+
+            <div class="card">
+                <div class="cmd-name">fc</div>
+                <div class="explanation">Open last command in $EDITOR, save, and it executes. Never retype long
+                    commands.
+                </div>
+                <div class="exec-box"><span class="exec-line">fc -s python=python3</span></div>
+            </div>
+
+            <div class="card">
+                <div class="cmd-name">wc</div>
+                <div class="explanation">Print newline, word, and byte counts for files.
+                </div>
+                <div class="exec-box"><span class="exec-line">wc -l <filename></span><span class="exec-line">wc -l
+                        *.`ext`
+                    </span><span class="exec-line">wc -l /path/to/file</span></div>
+            </div>
+
+            <div class="card">
+                <div class="cmd-name">alias</div>
+                <div class="explanation">Define shortcuts for commands. Add to ~/.bashrc for persistence.
+                </div>
+                <div class="exec-box"><span class="exec-line">alias `short_cmd`=`longer_cmd`</span>
+                    <span class="exec-line">alias kg="kubectl get"</span>
+                </div>
+                </br>
+                <div class="explanation">use like this for terraform:
+                </div>
+                <div class="exec-box"><span class="exec-line">alias tf="terraform"</span>
+                    <span class="exec-line">tf init</span>
+                    <span class="exec-line">tf plan</span>
+                    <span class="exec-line">tf apply</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <h2>Pro Tips & Shortcuts</h2>
+    <div class="grid">
+        <div class="card tip-card">
+            <span class="tip-title">💡 Add aliases permanently</span>
+            <div class="explanation">add in /home/`user`/.bashrc file at the EOF</div>
+        </div>
+
+        <div class="card tip-card">
+            <span class="tip-title">💡 Make default editor as Vim</span>
+            <div class="explanation">• add in /home/`user`/.bashrc file at the EOF
+                • export EDITOR=vim
+                • export VISUAL=vim
+                • for opening the cronjobs, fc in the default editor
+            </div>
+        </div>
+
+        <div class="card tip-card">
+            <span class="tip-title">💡 Speed demon</span>
+            <div class="explanation">• Ctrl + r -> Reverse history search
+                • Ctrl + a -> Jump to start
+                • Ctrl + e -> Jump to end
+                • !! -> Re-run last command
+                • Alt + . -> Last argument
+            </div>
+        </div>
+
+        <div class="card tip-card">
+            <span class="tip-title">💡 Stop Cat Abuse</span>
+            <div class="explanation">Abusing cats is a prevalent problem in the Linux user community.
+                Instead of using</div>
+            <div class="exec-box"><span class="exec-line">cat `filename` | grep `pattern`</span>
+                <span class="exec-line">cat `filename` | head -n 10</span>
+                <span class="exec-line">cat `filename` | less</span>
+            </div>
+            <div class="explanation">
+                use:</div>
+            <div class="exec-box"><span class="exec-line">grep `pattern` `filename`</span>
+                <span class="exec-line">head -n 10 `filename`</span>
+                <span class="exec-line">less `filename`</span>
+            </div>
+        </div>
+
+        <div class="card tip-card">
+            <span class="tip-title">💡 Navigation Saviors</span>
+            <div class="explanation">• Toggle to last directory.</div>
+            <div class="exec-box"><span class="exec-line">cd -</span></div>
+            <div class="explanation">
+                • Re-run last command with sudo.</div>
+            <div class="exec-box"><span class="exec-line">sudo !!</span></div>
+            <div class="explanation">
+                • Learn Vim in 20 mins.</div>
+            <div class="exec-box"><span class="exec-line">vimtutor</span></div>
+        </div>
+
+        <div class="card tip-card">
+            <span class="tip-title">💡 For Fun</span>
+            <div class="explanation">• hollywood: Melodrama technobabble [Package: hollywood]
+                usage: hollywood<div class="cmd-row"><span class="hover-trigger">VIEW</span>
+                    <div class="gif-preview"><img src="hollywood.gif" alt="fun"></div>
+                </div>
+                • cmatrix: Matrix scrolling screen [Package: cmatrix] usage: cmatrix<div class="cmd-row"><span
+                        class="hover-trigger">VIEW</span>
+                    <div class="gif-preview"><img src="cmatrix.gif" alt="fun"></div>
+                </div>
+                • fortune: Random quotes [Package: fortune] usage: fortune</br>
+                • sl: Steam Locomotive [Package: sl] usage: sl<div class="cmd-row"><span
+                        class="hover-trigger">VIEW</span>
+                    <div class="gif-preview"><img src="sl.gif" alt="fun"></div>
+                </div>
+                • espeak: Text to speech [Package: espeak] usage: espeak "hello"</br>
+                • cowsay: ASCII art characters [Package: cowsay] usage: fortune | cowsay</br>
+                • funny-manpages [Package: funny-manpages] usage: man baby</br>
+                • eDEX-UI: Sci-Fi terminal experience [<a
+                    href="https://sourceforge.net/projects/edex-ui.mirror/">Download</a>] For all Platforms
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+
+</html>
