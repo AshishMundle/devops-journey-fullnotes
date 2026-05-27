@@ -1,4 +1,3 @@
-```markdown
 # 🐧 Multi-Cloud DevOps & AI Engineering: Comprehensive Linux Administration Log
 
 **Batch:** 43  
@@ -12,8 +11,8 @@
 ## 🧭 Module Roadmap & Architecture Blueprint
 
 
-```
-```
+```Architecture Diagram
+
 ┌────────────────────────────────────────────────────────────────────────┐
 │                      THE ENTERPRISE LINUX RUNTIME ENVIRONMENT          │
 └────────────────────────────────────────────────────────────────────────┘

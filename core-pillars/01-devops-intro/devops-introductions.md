@@ -1,13 +1,3 @@
-Here is the complete package. It is divided into two distinct parts:
-
-1. **A comprehensive, beautifully formatted Markdown file (`day-01-cloud-devops.md`)** that merges your raw session notes, configuration files, scenario-based edge cases, and exhaustive interview questions into a single, cohesive training log.
-
----
-
-# Part 1: The Consolidated Markdown Log
-
-*Save the code block below as `core-pillars/01-devops-intro/2026-03-20-cloud-k8s-fundamentals.md` in your repository.*
-
 # ☁️ Day 01: Cloud Infrastructure, Containerization Mechanics, and AI-Driven K8s Manifest Engineering
 
 **Date:** March 20, 2026  
@@ -38,7 +28,7 @@ We initialized a baseline Linux server optimized for container runtimes.
 * **Storage Plane:** 50GB SSD Persistent Disk (Selected over standard HDD for significantly higher IOPS to handle simultaneous container build streams).
 * **Firewall Ingress Matrix:** Checked **Allow HTTP** and **Allow HTTPS** flags on provisioning.
 
-```
+```Architecture Diagram
               [ Internet Traffic ]
                        │
                        ▼ (Port 80 / 443)
