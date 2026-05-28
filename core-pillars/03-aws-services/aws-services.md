@@ -132,25 +132,25 @@ sudo systemctl enable nginx
 
 # Inject a responsive HTML landing page into the default web root directory  
 sudo cat <<EOF > /usr/share/nginx/html/index.html  
-\<\!DOCTYPE html\>  
-\<html lang="en"\>  
-\<head\>  
-    \<meta charset="UTF-8"\>  
-    \<title\>Production Web Node \- Active\</title\>  
-    \<style\>  
-        body { font-family: 'Helvetica Neue', Arial; background: \#0f172a; color: \#f8fafc; text-align: center; padding-top: 5rem; }  
-        .card { background: \#1e293b; max-width: 500px; margin: 0 auto; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px \-1px rgba(0,0,0,0.5); }  
-        h1 { color: \#38bdf8; }  
-    \</style\>  
-\</head\>  
-\<body\>  
-    \<div class="card"\>  
-        \<h1\>Node Status: Operational\</h1\>  
-        \<p\>Managed via Automated DevOps Bootstrapping Sequences\</p\>  
-        \<small\>Instance Refresh Tracker: $(date)\</small\>  
-    \</div\>  
-\</body\>  
-\</html\>  
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <title>Production Web Node \- Active</title>  
+    <style>  
+        body { font-family: 'Helvetica Neue', Arial; background: #0f172a; color: #f8fafc; text-align: center; padding-top: 5rem; }  
+        .card { background: #1e293b; max-width: 500px; margin: 0 auto; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5); } 
+        h1 { color: #38bdf8; }  
+    </style>  
+</head>  
+<body>  
+    <div class="card">  
+        <h1>Node Status: Operational</h1>  
+        <p>Managed via Automated DevOps Bootstrapping Sequences</p>  
+        <small>Instance Refresh Tracker: $(date)</small>  
+    </div>  
+</body>  
+</html>  
 EOF
 
 ```
@@ -438,19 +438,25 @@ Follow these configuration rules to establish secure peering connections:
 **Step 2: Establish the Connection Request:** Submit a request from your local VPC console to link with the target remote network space.
 
 ```Bash  
-aws ec2 create-vpc-peering-connection \--vpc-id vpc-local-01 \--peer-vpc-id vpc-remote-02
+aws ec2 create-vpc-peering-connection \
+--vpc-id vpc-local-01 \
+--peer-vpc-id vpc-remote-02
 ```
 
 **Step 3: Accept the Connection Request:** The administrator of the destination target network must explicitly accept the incoming peering request to establish the connection link.
 
 ```Bash  
-aws ec2 accept-vpc-peering-connection \--vpc-peering-connection-id pcx-0123456789abcdef0
+aws ec2 accept-vpc-peering-connection \
+--vpc-peering-connection-id pcx-0123456789abcdef0
 ```
 
 **Step 4: Update Route Tables:** Add explicit routing entries on both networks to redirect cross-VPC traffic through the newly established peering connection (pcx).
 
 ```Bash  
-aws ec2 create-route \--route-table-id rtb-local-private \--destination-cidr-block 192.168.0.0/16 \--gateway-id pcx-0123456789abcdef0
+aws ec2 create-route 
+\--route-table-id rtb-local-private 
+\--destination-cidr-block 192.168.0.0/16 
+\--gateway-id pcx-0123456789abcdef0
 ```
 
 **Step 5: Maintain Non-Transitive Discipline:** Remember that VPC Peering is non-transitive. If Network A is peered with Network B, and Network B is peered with Network C, Network A **cannot** communicate with Network C through Network B. To allow communication, you must build a direct peering connection between Network A and Network C.
@@ -465,17 +471,27 @@ aws ec2 create-route \--route-table-id rtb-local-private \--destination-cidr-blo
   3. A stateless subnet **NACL** is blocking port access or missing the outbound rules needed to handle high-port ephemeral return paths (ports 1024–65535).  
 * **Resolution Strategy:**  
   **Step 1:** Verify the instance's security group configuration and add an explicit inbound rule allowing web traffic from any source:  
-  Bash  
-  aws ec2 authorize-security-group-ingress \--group-id sg-webservers \--protocol tcp \--port 80 \--cidr 0.0.0.0/0
+  
+```Bash  
+  aws ec2 authorize-security-group-ingress \
+  --group-id sg-webservers \
+  --protocol tcp \
+  --port 80 \
+  --cidr 0.0.0.0/0
+```
 
   **Step 2:** Check the subnet's route table to ensure internet-bound traffic is routed correctly through the Internet Gateway:  
-  Plaintext  
+
+```Plaintext  
   Destination: 0.0.0.0/0  \---\>  Target: igw-0123456789abc
+```
 
   **Step 3:** Check the subnet's stateless NACL rules and add the outbound entry needed to handle ephemeral return traffic:  
-  Plaintext  
+
+```Plaintext  
   Inbound Rule:  Allow  | Protocol: TCP | Port: 80 | Source: 0.0.0.0/0  
   Outbound Rule: Allow  | Protocol: TCP | Port: 1024-65535 | Destination: 0.0.0.0/0
+```
 
 ### **🖥️ Scenario B: A large-scale automation platform launches a group of web instances inside a private subnet. The instances need to download essential runtime software dependencies during startup, but the installation processes fail with Host Unreachable errors.**
 
@@ -483,8 +499,13 @@ aws ec2 create-route \--route-table-id rtb-local-private \--destination-cidr-blo
 * **Resolution Strategy:**  
   **Step 1:** Verify that a functional, active NAT Gateway exists within one of the public subnets.  
   **Step 2:** Update the route table associated with your private subnet to redirect internet-bound traffic (0.0.0.0/0) directly through that NAT Gateway:  
-  Bash  
-  aws ec2 create-route \--route-table-id rtb-private-tier \--destination-cidr-block 0.0.0.0/0 \--nat-gateway-id nat-0a1b2c3d4e5f6g7h8
+
+```Bash  
+  aws ec2 create-route \
+  --route-table-id rtb-private-tier \
+  --destination-cidr-block 0.0.0.0/0 \
+  --nat-gateway-id nat-0a1b2c3d4e5f6g7h8
+```
 
 ### **🖥️ Scenario C: An automated backup pipeline attempts to replicate database archive files directly into a secure S3 storage bucket. The backup script fails immediately with 403 Access Denied errors.**
 
@@ -493,17 +514,19 @@ aws ec2 create-route \--route-table-id rtb-local-private \--destination-cidr-blo
   2. The target S3 bucket uses an explicit Bucket Policy that restricts access to specific IP ranges or blocks unencrypted data uploads.  
 * **Resolution Strategy:**  
   **Step 1:** Create an IAM permission policy that explicitly allows the script's identity to upload objects to the target bucket:  
-  JSON  
+  
+```JSON  
   {  
       "Version": "2012-10-17",  
-      "Statement": \[  
+      "Statement": [  
           {  
               "Effect": "Allow",  
               "Action": "s3:PutObject",  
-              "Resource": "arn:aws:s3:::production-backup-vault-alpha/\*"  
+              "Resource": "arn:aws:s3:::production-backup-vault-alpha/*"  
           }  
-      \]  
+      ]  
   }
+```  
 
   **Step 2:** Attach this policy directly to the IAM role or user account running your backup scripts.
 
@@ -542,7 +565,11 @@ To enable Cross-Region Replication across your storage layers, you must meet thr
 To build a resilient multi-region disaster recovery pipeline, you must copy your master images or snapshots across regions beforehand. This process creates a valid regional resource identifier ($AMI\\ ID$) in the target region, which your automation pipelines can use during failover events.
 
 ```Bash  
-aws ec2 copy-image \--source-region us-east-1 \--source-image-id ami-01234alpha \--region ap-south-1 \--name "Disaster-Recovery-Fallback-Image"
+aws ec2 copy-image \
+--source-region us-east-1 \
+--source-image-id ami-01234alpha \
+--region ap-south-1 \
+--name "Disaster-Recovery-Fallback-Image"
 ```
 
 ### **Q6: What are the key architectural benefits of choosing Amazon RDS over managing a relational database manually on a standard EC2 instance?**
