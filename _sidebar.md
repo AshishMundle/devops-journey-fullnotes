@@ -23,3 +23,7 @@
 * **06. Terraform & Ansible**
   * [Infrastructure as Code (Terraform)](core-pillars/06-terraform-ansible/terraform-iac.md)
   * [Configuration Management (Ansible)](core-pillars/06-terraform-ansible/ansible-config.md)
+
+* **07. Scripting Languages**
+  * [Python for DevOps](core-pillars/07-scripting/python-devops.md)
+  * [Bash for DevOps](core-pillars/07-scripting/bash-devops.md)
