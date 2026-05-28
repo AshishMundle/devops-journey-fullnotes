@@ -16,12 +16,12 @@ Welcome to my central infrastructure engineering log. This space serves as an ac
 
 | Pillar | Core Focal Points | Progress Status |
 | :--- | :--- | :--- |
-| **01. DevOps Intro** | Culture, CI/CD Pipeline Lifecycles, Feedback Loops | [Explore Logs](#/core-pillars/01-devops-intro/README.md) |
-| **02. Linux Basics** | Kernel Spaces, Bash Scripting, SSH Hardening | [Explore Logs](#/core-pillars/02-linux-basics/README.md) |
-| **03. AWS Services** | Highly Available Infrastructure, VPC Networking, Security Policies | [Explore Logs](#/core-pillars/03-aws-services/README.md) |
-| **04. Git ➔ Jenkins** | Branching Workflows, Declarative Pipeline-as-Code | [Explore Logs](#/core-pillars/04-git-jenkins/README.md) |
-| **05. Docker ➔ K8s** | Image Optimization, Container Lifecycles, Orchestration | [Explore Logs](#/core-pillars/05-docker-k8s/README.md) |
-| **06. Terraform & Ansible** | Idempotent Infrastructure Provisioning & Configurations | [Explore Logs](#/core-pillars/06-terraform-ansible/README.md) |
+| **01. DevOps Intro** | Culture, CI/CD Pipeline Lifecycles, Feedback Loops | [Explore Logs](#/core-pillars/01-devops-intro/devops-introductions) |
+| **02. Linux Basics** | Kernel Spaces, Bash Scripting, SSH Hardening | [Explore Logs](#/core-pillars/02-linux-basics/linux-introduction) |
+| **03. AWS Services** | Highly Available Infrastructure, VPC Networking, Security Policies | [Explore Logs](#/core-pillars/03-aws-services/aws-services) |
+| **04. Git ➔ Jenkins** | Branching Workflows, Declarative Pipeline-as-Code | [Explore Logs](#/core-pillars/04-git-jenkins/git-workflows) |
+| **05. Docker ➔ K8s** | Image Optimization, Container Lifecycles, Orchestration | [Explore Logs](#/core-pillars/05-docker-k8s/docker-mechanics) |
+| **06. Terraform & Ansible** | Idempotent Infrastructure Provisioning & Configurations | [Explore Logs](#/core-pillars/06-terraform-ansible/terraform-iac) |
 
 ---
 

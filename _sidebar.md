@@ -1,7 +1,7 @@
 * [🏠 Introduction & Dashboard](README.md)
 
 * **01. DevOps Introduction**
-  * [DevOps Introductions](core-pillars/01-devops-intro/devops-introductions.md)
+  * [DevOps Introduction](core-pillars/01-devops-intro/devops-introductions.md)
 
 * **02. Linux Basics**
   * [Linux Introduction](core-pillars/02-linux-basics/linux-introduction.md)
@@ -10,6 +10,10 @@
 * **03. Popular Cloud Services**
   * _AWS_
     * [Top 10 Services](core-pillars/03-aws-services/aws-services.md)
+  * _GCP_
+    * [COMING SOON]
+  * _AZURE_
+    * [COMING SOON]
 
 * **04. Git ➔ Jenkins**
   * [Advanced Git Workflows](core-pillars/04-git-jenkins/git-workflows.md)
@@ -27,3 +31,6 @@
 * **07. Scripting Languages**
   * [Python for DevOps](core-pillars/07-scripting/python-devops.md)
   * [Bash for DevOps](core-pillars/07-scripting/bash-devops.md)
+
+* **08. Projects**
+  * [COMING SOON]
