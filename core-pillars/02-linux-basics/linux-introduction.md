@@ -114,90 +114,102 @@ Key-based validation uses asymmetric cryptography ($ED25519$ or $RSA-4096$) to a
 > 🛑 **The Golden DevOps Security Mandate:** 
 > * **Public Key (`id_ed25519.pub`):** Can be safely shared with team leads, managers, or injected into cloud service metadata.
 > * **Private Key (`id_ed25519`):** **NEVER** share this key. Treat it like a master password. It should never leave your local machine or be committed to a git repository.
+```
 
 ### 3.2 Secure Multi-User Keys Configuration Pipeline
-```
 
 Step 1: Initialize an asymmetric cryptographic keypair using high-entropy ED25519 algorithm
 
-`ssh-keygen -t ed25519 -b 256 -C "nitesh.dudhe@devops.internal"`
+```bash
+ssh-keygen -t ed25519 -b 256 -C "nitesh.dudhe@devops.internal"
+```
 
 Step 2: Navigate inside your isolated security parameter profile directory
 
-`cd ~/.ssh/`
+```bash
+cd ~/.ssh/
+```
 
 Step 3: Print out the Public Key footprint string to provide to your Cloud Infrastructure Lead
 
-`cat id_ed25519.pub`
+```bash
+cat id_ed25519.pub
+```
 
 Step 4: [On Target Remote Host VM] Ensure the destination container profile has proper permissions
 
-`mkdir -p /root/.ssh && chmod 700 /root/.ssh`
+```bash
+mkdir -p /root/.ssh && chmod 700 /root/.ssh
+```
 
 Step 5: Append the provided public key directly to the authorization tracking profile
 
-`echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5... nitesh.dudhe@devops.internal" >> /root/.ssh/authorized_keys`
+```bash
+echo "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5... nitesh.dudhe@devops.internal" >> /root/.ssh/authorized_keys
+```
 
 Step 6: Set appropriate permissions on the authorized_keys file to ensure SSH drops access if unsecured
 
-`chmod 600 /root/.ssh/authorized_keys`
+```bash
+chmod 600 /root/.ssh/authorized_keys
+```
 
-```
 ### 3.3 System User Provisioning & Group Policy Mechanics
-```
 
 Step 1: Initialize a new system workspace user account profile
 
-`sudo adduser devopsuser`
+```bash
+sudo adduser devopsuser
+```
 
 Step 2: Create a logical group matrix targeting explicit project isolation boundaries
 
-`sudo addgroup devops-l2-engineering`
+```bash
+sudo addgroup devops-l2-engineering
+```
 
 Step 3: Inject the target user account into the newly defined administrative group parameters
 
-`sudo usermod -aG devops-l2-engineering devopsuser`
+```bash
+sudo usermod -aG devops-l2-engineering devopsuser
+```
 
 Step 4: Verify the permission grouping associations for the target user profile
 
 `groups devopsuser`
 
-```
-
 ### 3.4 Dynamic Password Aging & Governance Compliance Policies (`chage`)
+
 To comply with security audits (e.g., ISO 27001, SOC2), enterprise environments enforce password expiration rotations (typically a **90-day cycle**).
-
-
-```
 
 # Enforce security lifecycle boundaries on a target user account
 
-`sudo chage -m 7 -M 90 -W 14 -I 7 devopsuser
-
+```bash
+sudo chage -m 7 -M 90 -W 14 -I 7 devopsuser
 ```
-*   `-m 7`: **Minimum Password Age**. Prevents users from immediately cycling passwords back to an old choice.
-*   `-M 90`: **Maximum Password Age**. Forces password rotation every 90 days.
-*   `-W 14`: **Warning Period**. Provides daily alerts for 14 days prior to password expiration.
-*   `-I 7`: **Inactivity Lock**. Locks the account completely if a user fails to log in within 7 days after password expiration.
-*   Check active compliance rules using: `sudo chage -l devopsuser`
+
+* `-m 7`: **Minimum Password Age**. Prevents users from immediately cycling passwords back to an old choice.
+* `-M 90`: **Maximum Password Age**. Forces password rotation every 90 days.
+* `-W 14`: **Warning Period**. Provides daily alerts for 14 days prior to password expiration.
+* `-I 7`: **Inactivity Lock**. Locks the account completely if a user fails to log in within 7 days after password expiration.
+* Check active compliance rules using: `sudo chage -l devopsuser`
 
 ---
 
 ## 🛡️ Section 4: File Permissions & Access Control Lists
 
 ### 4.1 The Permission Bit-String Structure
+
 When running `ls -l`, permissions display as a 10-character string:
-```
 
 ```
+
 d  rwx  r-x  r-x
 │   │    │    │
 │   │    │    └── Others Permission Group
 │   │    └─────── Network Team/Group Association
 │   └──────────── Owner User Access Level
 └──────────────── File Type Flag (d = directory, - = regular file)
-
-```
 
 ```
 
@@ -209,15 +221,14 @@ d  rwx  r-x  r-x
 | **2** | `010` | Write (`w`) modification authority |
 | **1** | `001` | Execute (`x`) script/binary execution authorization |
 
-*   **Mode 755 (Enterprise Standard):** `Owner: rwx (4+2+1=7) | Group: r-x (4+0+1=5) | Others: r-x (4+0+1=5)`. Ideal standard mode for custom automation scripts.
-*   **Mode 777 (The Security Nightmare):** Gives universal read, write, and execute permissions to everyone. **Never use Mode 777 in production environments.** It breaks compliance standards and opens directories to arbitrary local execution attacks.
+* **Mode 755 (Enterprise Standard):** `Owner: rwx (4+2+1=7) | Group: r-x (4+0+1=5) | Others: r-x (4+0+1=5)`. Ideal standard mode for custom automation scripts.
+* **Mode 777 (The Security Nightmare):** Gives universal read, write, and execute permissions to everyone. **Never use Mode 777 in production environments.** It breaks compliance standards and opens directories to arbitrary local execution attacks.
 
 ---
 
 ## 📦 Section 5: Package Management & Service Orchestration
 
 ### 5.1 Multi-Distribution Package Manager Index
-
 
 ```
 
@@ -226,32 +237,41 @@ d  rwx  r-x  r-x
 ├── Red Hat / CentOS Enterprise Nodes  ──>  Tool: `yum` / `dnf`
 ├── Apple MacOS Environment Layer     ──>  Tool: `brew`
 └── Windows Enterprise Client Platform  ──>  Tool: `choco` / `winget`
+```
 
-```
 ### 5.2 NGINX Service Implementation, Patching, and Lifecycle Control
-```
 
 Step 1: Pull down synchronized repository indexes from master mirrors (Patch Management Baseline)
 
-`sudo apt update -y`
+```bash
+sudo apt update -y
+```
 
 Step 2: Install the target open-source enterprise proxy service engine web server
 
-`sudo apt install nginx -y`
+```bash
+sudo apt install nginx -y
+```
 
 Step 3: Query the system daemon tracking map to confirm operational state verification
 
-`systemctl status nginx`
+```bash
+systemctl status nginx
+```
 
 Step 4: Enforce boot persistence for the target daemon across machine reboot timelines
 
-`sudo systemctl enable nginx`
+```bash
+sudo systemctl enable nginx
+```
 
 Step 5: Execute operational control updates as required by infrastructure changes
 
-`sudo systemctl stop nginx`
-`sudo systemctl start nginx`
-`sudo systemctl restart nginx`
+```bash
+sudo systemctl stop nginx
+sudo systemctl start nginx
+sudo systemctl restart nginx
+```
 
 ---
 
@@ -349,6 +369,8 @@ ss -tuln | grep -E '(22|80|443)'
 echo -e "\n${SUCCESS}[SUCCESS] Diagnostic Health Trace Completed Successfully.${RESET}"
 
 ```
+
+---
 
 ```bash
 # Ensure execution authority is set before testing the script
@@ -453,19 +475,19 @@ Hands-on labs reinforce command familiarity through live challenges.
 * **Resolution Strategy:**
     1. Identify files marked as deleted but still held open by system processes:
 
-```
+```bash
        sudo lsof +L1
 ```
 
     2. Instead of running a standard `rm` command, clear the file contents by truncating it down to 0 bytes:
 
-```
+```bash
        sudo truncate -s 0 /var/log/nginx/error.log
 ```
 
-3. Restart the responsible daemon to cleanly refresh its tracking handles:
+1. Restart the responsible daemon to cleanly refresh its tracking handles:
 
-```
+```bash
        sudo systemctl restart nginx
 ```
 
@@ -475,7 +497,7 @@ Hands-on labs reinforce command familiarity through live challenges.
 * **Resolution Strategy:**
     1. Query the low-level ring buffer system logs to check for explicit Out-Of-Memory termination events:
 
-```
+```bash
        sudo dmesg -T | grep -i -E '(oom|killed)'
 ```
 
@@ -488,19 +510,19 @@ Hands-on labs reinforce command familiarity through live challenges.
 * **Resolution Strategy:**
     1. Find the parent process ID ($PPID$) keeping the zombie alive:
 
-```
+```bash
        ps -o ppid= -p [ZOMBIE_PID]
 ```
 
     2. Send a graceful termination signal to the parent process, forcing it to clean up its child tasks:
 
-```
+```bash
        kill -11 [PARENT_PID]
 ```
 
     3. If the parent process remains unresponsive, issue a forceful restart to clear the chain:
 
-```
+```bash
        kill -9 [PARENT_PID]
 ```
 

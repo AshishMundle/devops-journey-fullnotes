@@ -8,13 +8,17 @@
         rel="stylesheet">
     <style>
         :root {
-            --bg: #0d1117;
-            --card: #161b22;
-            --accent: #58a6ff;
-            --text: #c9d1d9;
-            --cmd: #7ee787;
-            --tip: #ffa657;
-            --border: #30363d;
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --accent: #4f46e5;
+            --text: #0f172a;
+            --text-muted: #475569;
+            --cmd: #0f766e;
+            --tip: #b45309;
+            --border: #e2e8f0;
+            --code-bg: #252b31;
+            --code-text: #dd7505;
+            --code-prompt: #94a3b8;
         }
 
         body {
@@ -37,7 +41,7 @@
         }
 
         h1 {
-            color: white;
+            color: var(--text);
             font-size: 2.5rem;
             margin: 0;
         }
@@ -49,7 +53,7 @@
         }
 
         h2 {
-            color: white;
+            color: var(--text);
             margin-top: 40px;
             border-left: 5px solid var(--accent);
             padding-left: 15px;
@@ -66,12 +70,14 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 25px;
-            transition: 0.3s;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
         }
 
         .card:hover {
             border-color: var(--accent);
             transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.08);
         }
 
         .cmd-name {
@@ -83,13 +89,14 @@
 
         .explanation {
             font-size: 0.95rem;
-            color: #8b949e;
+            color: var(--text-muted);
             margin-bottom: 15px;
             white-space: pre-line;
         }
 
         .exec-box {
-            background: #010409;
+            background: var(--code-bg);
+            border: 1px solid var(--border);
             padding: 15px;
             border-radius: 8px;
             font-family: 'Fira Code', monospace;
@@ -97,14 +104,14 @@
         }
 
         .exec-line {
-            color: #d2a8ff;
+            color: var(--code-text);
             display: block;
             margin-bottom: 5px;
         }
 
         .exec-line::before {
             content: "$ ";
-            color: #484f58;
+            color: var(--code-prompt);
         }
 
         .tip-card {
@@ -129,7 +136,7 @@
         .hover-trigger {
             cursor: help;
             font-weight: bold;
-            color: #007bff;
+            color: var(--accent);
             text-decoration: underline;
         }
 
@@ -142,9 +149,9 @@
             /* Adjust based on where you want the GIF to appear */
             top: 0;
             z-index: 1000;
-            border: 2px solid #333;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border);
+            background: var(--card);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         .gif-preview img {
@@ -157,6 +164,17 @@
         /* Show the GIF on hover */
         .cmd-row:hover .gif-preview {
             display: block;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #312e81;
         }
     </style>
 </head>
