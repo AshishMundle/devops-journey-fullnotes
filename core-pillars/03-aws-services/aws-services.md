@@ -1,9 +1,8 @@
   
 # ☁️ Multi-Cloud DevOps & Infrastructure Architecture: Enterprise AWS Engineering Log
 
-****Batch:**** 43    
-****Module:**** Core Cloud Infrastructure, Identity Governance, Relational Storage & Advanced Networking    
-****Instructor:**** Cloud (Vikas)    
+****Batch:**** 43
+****Module:**** Core Cloud Infrastructure, Identity Governance, Relational Storage & Advanced Networking
 ****System Target:**** AWS Production Framework / Secure Multi-Region Architecture  
 
 ---
@@ -24,6 +23,7 @@
 
 
 ```
+
 ## **🏗️ Section 1: Public Cloud Fundamentals & Traditional Modernization**
 
 ### **1.1 The Cloud Paradigms**
@@ -61,6 +61,7 @@ Plaintext
 ### **2.1 Least Privilege Authentication Foundations**
 
 Identity and Access Management ($IAM$) acts as the security gateway for the entire AWS cloud plane. It controls user access based on two distinct identities: the highly privileged Root Account and tightly scoped IAM identities.
+
 ```  
   [ Corporate DevOps Engineer ]          [ AWS IAM Evaluation Engine ]          [ Target Cloud Resource ]  
   ┌─────────────────────────────┐         ┌────────────────────────────┐         ┌───────────────────────┐  
@@ -68,6 +69,7 @@ Identity and Access Management ($IAM$) acts as the security gateway for the enti
   │ (Uses IAM Role Credentials) │         │ (Checks for Explicit Deny) │         │ (Access Scope: Valid) │  
   └─────────────────────────────┘         └────────────────────────────┘         └───────────────────────┘
 ```
+
 🛑 **The Golden Identity Guardrail:** \> Never use the AWS Root Account for daily administration tasks. Lock it away behind physical Multi-Factor Authentication ($MFA$). Create dedicated IAM groups and roles that assign access using the principle of **Least Privilege**.
 
 ### **2.2 Provisioning an IAM Group Policy Pipeline**
@@ -95,7 +97,7 @@ Follow these administrative steps to set up secure group control structures for 
 
 ### **2.3 Account Aliases & Programmatic Automation Accounts**
 
-* **Account Alias:** Custom corporate URLs replace long, numeric AWS account strings (e.g., https://992134421912.signin.aws.amazon.com/console changes to https://devops-force-prod.signin.aws.amazon.com/console). This makes login processes much easier to manage.  
+* **Account Alias:** Custom corporate URLs replace long, numeric AWS account strings (e.g., <https://992134421912.signin.aws.amazon.com/console> changes to <https://devops-force-prod.signin.aws.amazon.com/console>). This makes login processes much easier to manage.  
 * **Programmatic Service Accounts:** Automated platforms (like Terraform pipelines, Jenkins automation servers, and custom Python scripts) connect using non-console API calls. These use unique Access Key IDs and Secret Access Keys rather than standard user passwords.
 
 ## **🐳 Section 3: EC2 Systems Engineering & Elastic Scalability**
@@ -152,6 +154,7 @@ sudo cat <<EOF > /usr/share/nginx/html/index.html
 EOF
 
 ```
+
 ## **💾 Section 4: EBS Storage Management & Master System Blueprints**
 
 ### **4.1 Block Storage Performance Planes**
@@ -165,6 +168,7 @@ Elastic Block Store ($EBS$) provides persistent block storage volumes that attac
   │ Log Files & Database │            │ (Low-Latency Pipe)  │            │ (Can snapshot to S3)     │  
   └──────────────────────┘            └─────────────────────┘            └──────────────────────────┘
 ```
+
 * **Amazon Machine Image (AMI):** A packaged master snapshot containing an OS template, pre-installed software, and specific configuration baselines. AMIs allow you to instantly spawn pre-configured compute clusters.  
 * **Launch Template:** A master template that stores explicit instance configurations—including instance types, specific AMI IDs, network subnet mappings, and security group rules. These simplify and standardize resource provisioning.
 
@@ -190,7 +194,7 @@ Amazon Simple Storage Service ($S3$) is an object storage platform built to stor
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-* **Global Namespace Mandate:** S3 bucket names map directly to global internet routing endpoints (e.g., https://my-bucket.s3.amazonaws.com). Because of this, bucket names must be globally unique across all AWS customer accounts worldwide.  
+* **Global Namespace Mandate:** S3 bucket names map directly to global internet routing endpoints (e.g., <https://my-bucket.s3.amazonaws.com>). Because of this, bucket names must be globally unique across all AWS customer accounts worldwide.  
 * **Unprecedented Durability Metrics:** S3 Standard delivers **99.999999999% (11 Nines) durability**. This level of resilience means that if you store 10,000 files in S3, you can expect to lose a single file once every 10 million years.
 
 ### **5.2 S3 Tier Optimization Lifecycles**
@@ -288,16 +292,19 @@ Follow these operational steps to build and connect to a database layer using a 
 aws ec2 create-security-group --group-name JumpHost-SG --description "Allows SSH connection inbound from corporate IP"  
 aws ec2 authorize-security-group-ingress --group-name JumpHost-SG --protocol tcp --port 22 --cidr 203.0.113.50/32
 ```
+
 **Step 2: Provision a security group for the private database layer**
 
 ```Bash
 aws ec2 create-security-group --group-name Database-SG --description "Allows private connectivity only from JumpHost-SG on Port 3306"
 ```
+
 **Step 3: Add ingress rules that lock the database down to accept traffic exclusively from the Jump-Host security group**
 
 ```Bash
 aws ec2 authorize-security-group-ingress --group-name Database-SG --protocol tcp --port 3306 --source-group JumpHost-SG
 ```
+
 **Step 4: Provision an RDS MySQL database instance inside your private subnet framework**
 
 ```Bash  
@@ -400,7 +407,6 @@ aws ec2 create-route --route-table-id rtb-private-067890 --destination-cidr-bloc
 
 Network Access Control Lists ($NACLs$) provide a stateless layer of security at the subnet boundary, acting as a powerful guardrail alongside stateful Security Groups.
 
-
 ```Architecture Diagram
 ┌───────────────────────────────────────────────────────────────────────────────────────┐
 │                                   VPC PROTECTION LAYERS                               │
@@ -426,6 +432,7 @@ VPC Peering connects independent virtual networks, allowing resources inside the
   │ Private IP: 10.0.1.25     │               │ (No Internet Transit) │               │ Private IP: 192.168.1.5 │  
   └───────────────────────────┘               └───────────────────────┘               └─────────────────────────┘
 ```
+
 Follow these configuration rules to establish secure peering connections:  
 **Step 1: Check for Overlapping CIDR Blocks:** Peering connections will fail immediately if both VPC networks share overlapping IP space (e.g., if both networks are configured to use a 10.0.0.0/16 range).  
 **Step 2: Establish the Connection Request:** Submit a request from your local VPC console to link with the target remote network space.
@@ -433,16 +440,19 @@ Follow these configuration rules to establish secure peering connections:
 ```Bash  
 aws ec2 create-vpc-peering-connection \--vpc-id vpc-local-01 \--peer-vpc-id vpc-remote-02
 ```
+
 **Step 3: Accept the Connection Request:** The administrator of the destination target network must explicitly accept the incoming peering request to establish the connection link.
 
 ```Bash  
 aws ec2 accept-vpc-peering-connection \--vpc-peering-connection-id pcx-0123456789abcdef0
 ```
+
 **Step 4: Update Route Tables:** Add explicit routing entries on both networks to redirect cross-VPC traffic through the newly established peering connection (pcx).
 
 ```Bash  
 aws ec2 create-route \--route-table-id rtb-local-private \--destination-cidr-block 192.168.0.0/16 \--gateway-id pcx-0123456789abcdef0
 ```
+
 **Step 5: Maintain Non-Transitive Discipline:** Remember that VPC Peering is non-transitive. If Network A is peered with Network B, and Network B is peered with Network C, Network A **cannot** communicate with Network C through Network B. To allow communication, you must build a direct peering connection between Network A and Network C.
 
 ## **🧠 Section 9: Scenario-Based Infrastructure Problem Solving**

@@ -28,7 +28,9 @@
             name: 'DevOps Journey <br/> Nitesh Dudhe',
             repo: 'nitesh-dudhe/devops-journey',
             loadSidebar: true,
-            alias: { '/.*/_sidebar.md': '/_sidebar.md' },
+            alias: { '/.*/_sidebar.md': '_sidebar.md' },
+
+            basePath: window.location.origin.includes('github.io') ? '/devops-journey/' : '/',
             subMaxLevel: 0,
             auto2top: true,
             search: {

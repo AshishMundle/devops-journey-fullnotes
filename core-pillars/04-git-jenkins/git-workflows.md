@@ -4,8 +4,6 @@
 
 **Module:** Core Source Code Management, Distributed Revision Control, Collaboration Workflows, and Enterprise Branching Strategy
 
-**Instructor:** Cloud (Vikas)
-
 **System Target:** Linux, macOS (Homebrew Framework), and Windows Shell Ecosystems
 
 ---
@@ -280,19 +278,20 @@ A Pull Request ($PR$) is a collaboration tool that allows you to propose changes
 
 ## 🧠 Section 8: Scenario-Based Problem Solving (Real-World Incidents)
 
-### 🖥️ Scenario A: An engineer clones an enterprise repository, configures a critical environment file, and runs a code execution sequence. However, when trying to run Git commands, they encounter the error: `fatal: not a git repository (or any of the parent directories): .git`.
+### 🖥️ Scenario A: An engineer clones an enterprise repository, configures a critical environment file, and runs a code execution sequence. However, when trying to run Git commands, they encounter the error: `fatal: not a git repository (or any of the parent directories): .git`
 
 * **Root Cause Analysis:** This error occurs when Git cannot find a valid `.git` configuration tracking folder anywhere in the current directory or its parent folders. The engineer likely ran `git clone`, but forgot to change directories into the newly created project folder before executing their commands.
 * **Resolution Strategy:**
 **Step 1:** Run `ls` or `dir` to list the contents of the current directory and find the folder created by your clone command.
 **Step 2:** Change directories into the project folder:
+
 ```bash
 cd enterprise-infrastructure-repo/
 ```
 
 **Step 3:** Re-run `git status` to verify that Git can now read the tracking engine.
 
-### 🖥️ Scenario B: A developer finishes a feature and runs `git push origin feature-fix`. They immediately realize they accidentally left an exposed AWS root account secret key string inside a configuration file (`app-config.json`) that is now public on GitHub.
+### 🖥️ Scenario B: A developer finishes a feature and runs `git push origin feature-fix`. They immediately realize they accidentally left an exposed AWS root account secret key string inside a configuration file (`app-config.json`) that is now public on GitHub
 
 * **Root Cause Analysis:** The sensitive credential file was staged and committed because it wasn't filtered out by an infrastructure safety mask or exclusion file. Because the commit was pushed up to a public or shared remote server, the secret key is now exposed in the project's public history.
 * **Resolution Strategy:**
@@ -300,11 +299,13 @@ cd enterprise-infrastructure-repo/
 **Step 0: Rotate the Secret Immediately:** Treat the credential as compromised. Go to the AWS IAM Console right away to deactivate, delete, and rotate the exposed access key. This steps stops anyone from using the exposed credential, protecting your system while you clean up the repository history.
 
 **Step 1: Remove the File From History Locally:** Use Git commands to strip the sensitive file out of your local tracking history:
+
 ```bash
 git rm --cached app-config.json
 ```
 
 **Step 2: Update the Exclusion Rules:** Open or create a `.gitignore` file in the root of your project directory and add the file name to prevent it from being tracked again:
+
 ```.gitignore
 # Prevent system secrets from being tracked by Git
 app-config.json
@@ -312,7 +313,6 @@ app-config.json
 .env
 
 ```
-
 
 **Step 3: Clean Historical Commits:** Use specialized history-rewriting tools (such as `git-filter-repo` or BFG Repo-Cleaner) to purge the credential string completely from all past commits before pushing the cleaned history back to GitHub.
 
@@ -322,19 +322,23 @@ app-config.json
 * **Resolution Strategy:**
 
 **Option 1: Save Changes to a Temporary Stash:** If your local changes are incomplete but you want to save them for later, use `git stash` to set them aside safely:
+
 ```bash
 # Save uncommitted local changes to a temporary holding zone
 git stash
 ```
+
 # Pull the latest upstream updates from the remote repository safely
+
 ```bash
 git pull origin main
 ```
+
 # Re-apply your stashed changes back onto the updated workspace
+
 ```bash
 git stash pop
 ```
-
 
 **Option 2: Discard Local Changes:** If your local modifications were just for temporary testing and can be safely ignored, discard them to match the remote branch state:
 
@@ -343,8 +347,6 @@ git checkout -- deploy.yaml
 git pull origin main
 
 ```
-
-
 
 ---
 
@@ -357,7 +359,7 @@ git pull origin main
 * **`git reset`** moves the current branch pointer backward in time to a specific earlier commit, effectively rewriting history. This command removes all commits that came after that target commit from the branch's timeline. Because it alters history, `git reset` should **only** be used on private, local branches that haven't been pushed to a shared remote repository yet.
 * **`git revert`** is a safe way to undo changes on public or shared branches. Instead of erasing past commits, it creates a brand-new commit that applies the exact opposite changes of the commit you want to undo. This rolls back the unwanted changes while keeping your project's historical timeline intact, making it perfect for shared production branches.
 
-### Q2: Explain what the Staging Area (or Index) is in Git, and why it is useful compared to systems that commit changes directly.
+### Q2: Explain what the Staging Area (or Index) is in Git, and why it is useful compared to systems that commit changes directly
 
 **Answer:** The Staging Area is a preview space that acts as a buffer between your local working directory and the permanent repository history. Instead of committing every modification in your workspace at once, the staging area lets you select and organize specific changes using `git add`. This control allows you to break up large changes and build clean, focused, and meaningful commits, even if you've modified multiple unrelated files in your workspace.
 

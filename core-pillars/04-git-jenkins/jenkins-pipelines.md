@@ -4,8 +4,6 @@
 
 **Module:** Core Cloud Infrastructure, Identity Governance, Advanced Virtual Networks, and Distributed CI/CD Architecture
 
-**Instructor:** Cloud (Vikas)
-
 **System Target:** AWS Enterprise Framework / Distributed Jenkins Build Fleet
 
 ---
@@ -47,7 +45,6 @@ Modern cloud infrastructure transforms physical hardware provisioning from capit
 | **High Availability Strategy** | Highly expensive, duplicate mirror facilities required across zones. | Native Multi-AZ replication pipelines across isolated data centers. |
 | **Maintenance Profile** | Dedicated system administration teams required for hardware swapping. | Fully managed infrastructure; zero bare-metal management required. |
 
-
 ---
 
 ## 🔑 Section 2: Identity & Access Management (IAM) Governance
@@ -63,7 +60,6 @@ Identity and Access Management ($IAM$) acts as the initial access gateway for th
   │ (Uses IAM Role Credentials) │         │ (Checks for Explicit Deny) │         │ (Access Scope: Valid) │
   └─────────────────────────────┘         └────────────────────────────┘         └───────────────────────┘
 ```
-
 
 > 🛑 **The Golden Identity Guardrail:** Never use the AWS Root Account for daily operations. Secure it behind physical Multi-Factor Authentication ($MFA$) and store it away. Create dedicated IAM users and groups that assign permissions following the principle of Least Privilege.
 
@@ -219,6 +215,7 @@ Amazon Simple Storage Service ($S3$) is a highly resilient object storage platfo
 | **S3 Standard-IA** | Infrequently accessed cold data; requires instant access when requested. | 30 Days | Lower storage costs; includes a fee per gigabyte retrieved. |
 | **S3 Glacier Flexible** | Archive backups accessed less than once a year; tolerates retrieval delays. | 90 Days | Very low storage costs; data retrieval takes minutes to hours. |
 ```
+
 ### 5.3 Static Website Hosting Automation Pipeline
 
 Follow these deployment steps to transform an S3 bucket into a globally accessible website hosting endpoint:
@@ -568,52 +565,50 @@ pipeline {
 
 ## 🧠 Section 10: Scenario-Based Infrastructure Problem Solving
 
-### 🖥️ Scenario A: An engineer configures a fresh application pipeline on an EC2 instance. The application functions correctly inside the local subnet, but public internet users encounter `Connection Timeout` errors.
+### 🖥️ Scenario A: An engineer configures a fresh application pipeline on an EC2 instance. The application functions correctly inside the local subnet, but public internet users encounter `Connection Timeout` errors
 
 * **Root Cause Analysis:** This issue is typically caused by incorrect routing paths or restrictive firewall rules outside the instance itself.
+
 1. The instance sits inside a public subnet but lacks a routing entry directing internet-bound traffic (`0.0.0.0/0`) through an active Internet Gateway ($IGW$).
 2. The attached **Security Group** does not include an ingress rule allowing traffic on public web ports (Port 80/443).
 3. A stateless **Network ACL** is blocking the port, or missing the outbound rules needed to handle high-port ephemeral return paths (ports 1024–65535).
 
-
 * **Resolution Strategy:**
 **Step 1:** Check your security groups and add an explicit rule allowing web traffic from any source:
+
 ```bash
 aws ec2 authorize-security-group-ingress --group-id sg-webservers --protocol tcp --port 80 --cidr 0.0.0.0/0
 
 ```
 
-
 **Step 2:** Ensure the subnet's route table points internet-bound traffic to the Internet Gateway:
+
 ```Gateway
 Destination: 0.0.0.0/0  --->  Target: igw-0123456789abc
 
 ```
 
-
 **Step 3:** Check the subnet's stateless NACL rules and add the outbound entry needed to handle ephemeral return paths:
+
 ```Ephemeral
 Inbound Rule:  Allow  | Protocol: TCP | Port: 80 | Source: 0.0.0.0/0
 Outbound Rule: Allow  | Protocol: TCP | Port: 1024-65535 | Destination: 0.0.0.0/0
 
 ```
 
-
-
-### 🖥️ Scenario B: A large-scale automation platform launches a pool of compute nodes inside a private subnet. The instances need to download runtime software packages during boot, but installation processes fail with `Host Unreachable` errors.
+### 🖥️ Scenario B: A large-scale automation platform launches a pool of compute nodes inside a private subnet. The instances need to download runtime software packages during boot, but installation processes fail with `Host Unreachable` errors
 
 * **Root Cause Analysis:** Instances inside private subnets lack direct public routing paths to the internet. To connect outbound securely while blocking incoming requests, they require an outbound path through a **NAT Gateway** located within a public subnet.
 * **Resolution Strategy:**
 **Step 1:** Verify an active NAT Gateway is up and running within your public subnet.
 **Step 2:** Update the route table bound to your private subnet to direct all internet-bound traffic (`0.0.0.0/0`) through that NAT Gateway identifier:
+
 ```bash
 aws ec2 create-route --route-table-id rtb-private-tier --destination-cidr-block 0.0.0.0/0 --nat-gateway-id nat-0a1b2c3d4e5f6g7h8
 
 ```
 
-
-
-### 🖥️ Scenario C: An engineer configures automated code polling on a Jenkins project using `Poll SCM`. Over time, the server experience severe sluggishness, and the CPU usage baseline sits near 100%.
+### 🖥️ Scenario C: An engineer configures automated code polling on a Jenkins project using `Poll SCM`. Over time, the server experience severe sluggishness, and the CPU usage baseline sits near 100%
 
 * **Root Cause Analysis:** Using `Poll SCM` forces Jenkins to constantly reach out and query source code managers (like GitHub) for new commits based on your cron schedule (e.g., every minute). This continuous polling loop wastes system resources and causes high CPU utilization.
 * **Resolution Strategy:**
