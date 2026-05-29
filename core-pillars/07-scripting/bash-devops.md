@@ -82,11 +82,11 @@ done
 
 
 * **Arithmetic Scaling Contexts:** Compute calculations natively using the double-parentheses expansion operator:
+
 ```bash
 read -p "Enter base allocation number: " base
 result=$((base * 1024))
 echo "Calculated Metric Value: ${result}MB"
-
 ```
 
 
@@ -96,9 +96,9 @@ echo "Calculated Metric Value: ${result}MB"
 ### 💡 DevOps "Production-Grade" Pro-Tips
 
 * **1. Mandate the "Unofficial Bash Strict Mode":** Plain-vanilla shell scripts fail silently, moving onto the next line even if a previous critical command crashed. Always insert these three safety flags immediately under your shebang line to stop bad scripts instantly:
+
 ```bash
 set -euo pipefail
-
 ```
 
 
@@ -108,27 +108,27 @@ set -euo pipefail
 
 
 * **2. Ditch Backticks for Command Substitution:** Using backticks (`commands`) to save command output to a variable is legacy behavior. It is hard to read and breaks easily when nested. Use the clean syntax `$()` instead:
+
 ```bash
 # Avoid this: current_dir=`pwd`
 # Do this instead:
 current_dir=$(pwd)
-
 ```
 
 
 * **3. Always Quote Your Variable Expansions:** If a variable contains space characters (like a file path or user string), an unquoted reference will split into multiple unexpected arguments, breaking your script. Make it a hard habit to double-quote every variable call:
+
 ```bash
 # Dangerous: rm $filename
 # Safe and Correct:
 rm "$filename"
-
 ```
 
 
 * **4. Use `/usr/bin/env` for Portability:** Different Linux distros can store the Bash binary in different directories (e.g., `/bin/bash` vs `/usr/local/bin/bash`). For cross-platform scripts, make your shebang dynamic:
+
 ```bash
 #!/usr/bin/env bash
-
 ```
 
 
@@ -146,9 +146,9 @@ rm "$filename"
 
 * **Q:** You attempt to calculate a system percentage ratio inside your script using `result=$(( 10 / 3 ))`. Bash throws a configuration failure error or cuts off the fractional numbers completely. How do you process decimal math?
 * **A:** Bash's built-in `$(( ))` execution wrapper only supports integer arithmetic. It cannot handle decimal math. To process precise floating-point operations, pipe your calculation into the **Basic Calculator (`bc`)** system tool:
+
 ```bash
 percentage=$(echo "scale=2; 10 / 3" | bc)
-
 ```
 
 
@@ -157,9 +157,9 @@ percentage=$(echo "scale=2; 10 / 3" | bc)
 
 * **Q:** Your storage audit monitoring script runs perfectly on your personal local test Ubuntu server using `awk '{print $5}'` to pull disk utilization details. However, when it runs against a different production target node, the script scrapes random textual headers instead of numerical values. How do you make the logic safer?
 * **A:** Text positions inside raw commands like `df -h` drift depending on the operating system version and volume naming styles. To fix this, explicitly point your script to query a fixed volume path target directly:
+
 ```bash
 disk_utilization=$(df --output=pcent / | tail -n 1 | tr -d '% ')
-
 ```
 
 
@@ -183,7 +183,10 @@ disk_utilization=$(df --output=pcent / | tail -n 1 | tr -d '% ')
 **4. How do you safely check if a specific log file exists and is not empty before parsing it in a script?**
 
 > **Answer:** Use a combination of conditional file operators: `-f` to verify the path points to a valid file, and `-s` to confirm its byte size is greater than zero:
-> `bash if [[ -f "$log_path" && -s "$log_path" ]]; then echo "Log is valid for processing." fi `
+
+```bash
+if [[ -f "$log_path" && -s "$log_path" ]]; then echo "Log is valid for processing." fi
+```
 
 ---
 
@@ -194,7 +197,6 @@ Ensure no orphan virtual instances continue racking up active compute charges on
 ```bash
 # Clean up your testing files inside your local workspace directory
 rm -f filename.sh monit.sh loop_test.sh
-
 ```
 
 *Log into your AWS or GCP console interface and terminate your scratch VM testing instance directly from the dashboard view.*

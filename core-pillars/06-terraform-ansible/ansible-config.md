@@ -61,9 +61,9 @@ docker run -d --name target2 -it ubuntu:24.04 bash
 ### Step 1.3: Provisioning the Ansible Control Node (`ansible-master`)
 
 1. Access the master control terminal:
+
 ```bash
 docker exec -it ansible-master bash
-
 ```
 
 
@@ -85,11 +85,11 @@ dpkg-reconfigure --frontend noninteractive tzdata
 
 
 3. Register the official PPA repository layer and pull down the automation engine binary:
+
 ```bash
 add-apt-repository --yes --update ppa:ansible/ansible
 apt-get install -y ansible
 mkdir -p /etc/ansible && touch /etc/ansible/ansible.cfg
-
 ```
 
 
@@ -102,7 +102,6 @@ Ansible operates on an **agentless** matrix model. Target boxes require no perma
 
 ```bash
 docker exec -it target1 bash
-
 ```
 
 
@@ -110,7 +109,6 @@ docker exec -it target1 bash
 
 ```bash
 apt-get update && apt-get install -y openssh-server python3
-
 ```
 
 
@@ -265,12 +263,12 @@ Configure the atomic step blocks inside `webserver_infrastructure/tasks/main.yml
     name: nginx
     state: started
     enabled: yes
-
 ```
 
 ### Step 2.5: Establishing Templates and File Foundations
 
 1. Create a dynamic configuration model file in `webserver_infrastructure/templates/vhost.conf.j2`:
+
 ```nginx
 server {
     listen {{ http_port }} default_server;
@@ -293,6 +291,7 @@ server {
 ### Step 2.6: Executing the Unified Master Orchestrator
 
 1. Construct a global automation landing script named `deploy.yml` inside your root directory (`/root/ansible-modules/deploy.yml`):
+
 ```yaml
 ---
 - name: Converge Fleet Infrastructure Configuration States
@@ -305,6 +304,7 @@ server {
 
 
 2. Evaluate the visual and programmatic configuration layouts for formatting regressions before active execution:
+
 ```bash
 pip install ansible-lint
 ansible-lint deploy.yml
@@ -313,6 +313,7 @@ ansible-lint deploy.yml
 
 
 3. Boot the execution engine to witness automated target convergence:
+
 ```bash
 ansible-playbook deploy.yml
 
@@ -325,18 +326,16 @@ ansible-playbook deploy.yml
 ## 💡 DevOps "Enterprise-Standard" Pro-Tips
 
 1. **Defuse First-Connection Prompts (Strict Host Key Checking):** Prevent pipelines from stalling on unverified SSH fingerprint checks by adjusting your global config mask (`/etc/ansible/ansible.cfg`):
+
 ```ini
 [defaults]
 host_key_checking = False
-
 ```
-
-
 2. **Transition to Custom Dynamic Inventory Layouts:** Do not rely on hardcoded static IP mappings in enterprise cloud environments. Instead, build your infrastructure maps dynamically using native dynamic inventory plugins (e.g., `aws_ec2`, `azure_rm`) to discover assets on the fly based on tags.
 3. **The Localhost Execution Shortcut:** When running playbooks locally on your own engine infrastructure, completely bypass network transport overhead layers by passing the optimization flag directly in the playbook header:
+
 ```yaml
 connection: local
-
 ```
 
 
@@ -350,9 +349,9 @@ connection: local
 ### Scenario 1: The Infamous "SSH Connection Refused" (Port 22 Transport Failure)
 
 * **Problem Statement:** Executing `ansible-playbook deploy.yml` throws an instant transport crash error:
+
 ```text
 fatal: [target1_node]: UNREACHABLE! => {"changed": false, "msg": "Failed to connect to the host via ssh: ssh: connect to host 172.17.0.3 port 22: Connection refused"}
-
 ```
 
 
@@ -361,14 +360,10 @@ fatal: [target1_node]: UNREACHABLE! => {"changed": false, "msg": "Failed to conn
 2. Inspect the runtime status of the daemon: `service ssh status`. Since baseline standard Docker base images lack persistent init daemons (`systemd`), container boots or restarts kill the process background layers.
 3. Re-initialize the active server profile: `service ssh restart`.
 4. To make this change permanent in testing workflows, deploy containers passing host system privilege parameters:
+
 ```bash
 docker run -d --privileged --name target1 ubuntu:24.04 /lib/systemd/systemd
-
 ```
-
-
-
-
 
 ### Scenario 2: Weekend Ephemeral Bridge Drift & Configuration Mismatch
 
@@ -376,15 +371,11 @@ docker run -d --privileged --name target1 ubuntu:24.04 /lib/systemd/systemd
 * **Diagnostic Checklist & Resolution:**
 * **The Root Cause:** Standard Docker internal bridge configurations dynamically hand out IPs sequentially on container startup. If `target2` finished initializing a few seconds ahead of `target1`, their private IP mappings swapped places within the internal tables.
 * **The Structural Fix:** Avoid hardcoding dynamic IP points inside flat text profiles. Define dedicated custom bridge networks with isolated subnets and assign explicit static IPs upon instantiation:
+
 ```bash
 docker network create --subnet=192.168.50.0/24 lab_isolated_net
 docker run -d --name target1 --net lab_isolated_net --ip 192.168.50.10 -it ubuntu:24.04 bash
-
 ```
-
-
-
-
 
 ### Scenario 3: Privilege Handoff Mismatch & Sudo Execution Blocks
 
@@ -392,6 +383,7 @@ docker run -d --name target1 --net lab_isolated_net --ip 192.168.50.10 -it ubunt
 * **Diagnostic Checklist & Resolution:**
 * **The Root Cause:** While your lab playground relies on root account interactions, secure corporate target groups require connecting through lower-privilege system service accounts (e.g., `ansible_user`). These standard operational profiles cannot modify core system binaries or configurations.
 * **The Structural Fix:** Explicitly introduce privilege escalation maps into your active structural playbooks:
+
 ```yaml
 become: yes
 become_method: sudo
@@ -406,23 +398,24 @@ Ensure that target deployment configurations allow passwordless execution permis
 ### Scenario 4: The Invisible Trailing Indentation Tab (YAML Syntax Regression)
 
 * **Problem Statement:** Running your configuration code returns an immediate parsing execution crash:
+
 ```text
 ERROR! parsing string mismatch: mapping values are not allowed here or did not find expected key.
-
 ```
 
 
 * **Diagnostic Checklist & Resolution:**
 1. YAML parsing relies entirely on absolute indentation spacing; tab characters are strictly forbidden.
 2. Open the file directly within `vim` and reveal hidden characters to locate formatting problems:
+
 ```text
 :set list
-
 ```
 
 
 3. Replace any hidden tab characters with standard double-spaces.
 4. Always pass development code files through the syntax checking utility prior to execution:
+
 ```bash
 ansible-playbook deploy.yml --syntax-check
 ```
