@@ -22,6 +22,8 @@ Welcome to my central infrastructure engineering log. This space serves as an ac
 | **04. Git ➔ Jenkins** | Branching Workflows, Declarative Pipeline-as-Code | [Explore Logs](#/core-pillars/04-git-jenkins/git-workflows) |
 | **05. Docker ➔ K8s** | Image Optimization, Container Lifecycles, Orchestration | [Explore Logs](#/core-pillars/05-docker-k8s/docker-mechanics) |
 | **06. Terraform & Ansible** | Idempotent Infrastructure Provisioning & Configurations | [Explore Logs](#/core-pillars/06-terraform-ansible/terraform-iac) |
+| **07. Bash Scripting** | System Telemetry, Automation Functions, Shell Traps | [Explore Logs](#/core-pillars/07-scripting/bash-devops) |
+| **08. AI in DevOps** | ML-Powered Optimization, AIOps Platforms, Agentic Workflows | [Explore Logs](#/core-pillars/08-ai-devops/ai-devops) |
 
 ---
 
