@@ -18,7 +18,6 @@ Provision a standard enterprise Linux sandbox layer to run automation scripts sa
 
 ```bash
 echo $SHELL  # Typically returns /bin/bash
-
 ```
 
 
@@ -30,7 +29,6 @@ To ensure standard execution across different Linux distributions, scripts must 
 ```
 [ vi health.sh ] ──> [ #!/bin/bash ] ──> [ chmod +x ] ──> [ ./health.sh ]
  (Write Code)        (Define Shebang)    (Grant Exec)       (Run Runtime)
-
 ```
 
 * **The Shebang Line (`#!/bin/bash`):** This directive absolute path must sit on line 1, column 1 of your script. It instructs the kernel's program loader to bypass the calling shell and interpret the script's lines specifically using the `/bin/bash` binary engine.
@@ -38,7 +36,6 @@ To ensure standard execution across different Linux distributions, scripts must 
 
 ```bash
 chmod +x health.sh
-
 ```
 
 
@@ -64,7 +61,6 @@ echo -e "${GREEN}[Disk Volumetric Allocations]${RESET}" && df -h /
 
 echo -e "${CYAN}=== RUNTIME METRICS ===${RESET}"
 echo "Host Uptime Profile: $(uptime)"
-
 ```
 
 #### 4. Advanced Iteration, Control Structures, & Math
@@ -77,7 +73,6 @@ for i in {1..3}; do
     ps -eo pid,ppid,cmd,%mem --sort=-%mem | head -n 5
     sleep 30
 done
-
 ```
 
 

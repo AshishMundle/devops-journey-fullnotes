@@ -32,5 +32,8 @@
   * [Python for DevOps](core-pillars/07-scripting/python-devops.md)
   * [Bash for DevOps](core-pillars/07-scripting/bash-devops.md)
 
-* **08. Projects**
+* **08. AI in DevOps**
+  * [AI in DevOps](core-pillars/09-ai-devops/ai-devops.md)
+
+* **09. Projects**
   * [COMING SOON]
