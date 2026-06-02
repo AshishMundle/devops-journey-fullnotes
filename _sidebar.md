@@ -36,5 +36,5 @@
   * [AI in DevOps](core-pillars/08-ai-devops/ai-devops.md)
 
 * **09. Projects**
-  * [COMING SOON]
+  * [Multi-Cloud Smart ATS (Applicant Tracking System)](projects/multi-cloud-smart-ats/project_summary.md)
 
