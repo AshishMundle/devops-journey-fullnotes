@@ -65,7 +65,6 @@ Isolate package dependencies to avoid breaking system-level libraries.
     
 ```bash
     apt update && apt install -y python3-pip python3-venv git
-
 ```
 
 * **Code Clones & Directory Structuring:** Pull down the core Applicant Tracking System codebase directly from the class repository resource:
