@@ -7,7 +7,7 @@ Choosing a public cloud vendor is no longer a simple feature-by-feature comparis
 ---
 
 <p align="center">
-  <img src="assets/cloud-platforms-comparison.png" alt="Structural Core Service Translation Matrix across AWS, Azure, and GCP" style="max-width: 90%; max-height: 500px; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.3);" />
+  <img src="assets/cloud-platforms-comparison.png" alt="Structural Core Service Translation Matrix across AWS, Azure, and GCP" style="max-width: 90%; max-height: 100%; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.3);" />
   <br>
   <em style="color: #888; font-size: 0.9em; margin-top: 8px; display: inline-block;">Structural Core Service Translation Matrix across AWS, Azure, and GCP. Source: Veritis</em>
 </p>
