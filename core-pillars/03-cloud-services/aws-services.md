@@ -30,7 +30,7 @@
 
 Modern cloud infrastructure moves computing power from capital-heavy physical on-premises hardware arrays to agile, pay-as-you-go elastic resources managed programmatically.
 
-Plaintext  
+```Paradigm
 ┌─────────────────────────────────────────────────────────────────┐  
 │              Tenant Application Software / Automation           │  
 ├─────────────────────────────────────────────────────────────────┤  
@@ -40,6 +40,8 @@ Plaintext
 ├─────────────────────────────────────────────────────────────────┤  
 │  Physical Hardware Real Estate (Global Server Farms & Fiber)    │  
 └─────────────────────────────────────────────────────────────────┘
+```
+
 
 * **The Physical Arbitrage:** AWS handles hardware tracking, fiber line installations, facility security, power configurations, and hardware failure loops. This leaves DevOps and Site Reliability Engineers ($SREs$) free to focus entirely on managing runtime states, configuring infrastructure as code ($IaC$), and building automated deployment pipelines.  
 * **Global Footprint Terminology:**  
