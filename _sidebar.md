@@ -8,12 +8,10 @@
   * [Linux Advance Commands](core-pillars/02-linux-basics/commands_rich.html)
 
 * **03. Popular Cloud Services**
-  * _AWS_
-    * [Top 10 Services](core-pillars/03-aws-services/aws-services.md)
-  * _GCP_
-    * [COMING SOON]
-  * _AZURE_
-    * [COMING SOON]
+  * [Cloud Comparision](core-pillars/03-cloud-services/cloud-introductions.md)
+  * [AWS Services](core-pillars/03-cloud-services/aws-services.md)
+  * [GCP Services (COMING SOON)]
+  * [Azure Services](core-pillars/03-cloud-services/azure-services.md)
 
 * **04. Git ➔ Jenkins**
   * [Advanced Git Workflows](core-pillars/04-git-jenkins/git-workflows.md)
