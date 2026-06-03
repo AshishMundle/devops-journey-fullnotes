@@ -123,54 +123,152 @@ When evaluating cross-cloud or multi-cloud designs, map your requirements across
 
 ## 🎛️ Interactive Cloud Strategy Selector
 
-<details open>
-<summary><b>Step 1: Select Your Current Technology Ecosystem</b></summary>
-<blockquote style="margin-top: 10px;">
-  <form>
-    <input type="radio" id="eco-ms" name="ecosystem" value="azure">
-    <label for="eco-ms"><b>Microsoft-Centric:</b> Windows Server, SQL Server, .NET, Microsoft Entra ID</label><br><br>
-    
-    <input type="radio" id="eco-os" name="ecosystem" value="gcp">
-    <label for="eco-os"><b>Open Source / Linux-Native:</b> Containerized environments, Kubernetes, Python/Go</label><br><br>
-    
-    <input type="radio" id="eco-ent" name="ecosystem" value="aws">
-    <label for="eco-ent"><b>Multi-Vendor Enterprise:</b> Decoupled microservices, mixed environments, legacy infrastructure</label>
-  </form>
-</blockquote>
-</details>
+<div id="cloud-selector-widget" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #1e1e2e; color: #cdd6f4; border: 1px solid #45475a; border-radius: 12px; padding: 24px; max-width: 650px; margin: 20px auto; box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+    <h3 style="color: #89b4fa; margin-top: 0; margin-bottom: 8px; border-bottom: none; font-size: 1.4rem;">🎛️ Interactive Cloud Architecture Selector</h3>
+    <p style="color: #a6adc8; font-size: 0.9rem; margin-bottom: 20px;">Adjust the project parameters below to dynamically calculate your optimal cloud platform affinity.</p>
+    <div style="margin-bottom: 16px;">
+        <label style="display: block; font-weight: bold; margin-bottom: 6px; font-size: 0.9rem; color: #b4befe;">1. Current Tech Stack Dependency</label>
+        <select id="stack" onchange="calculateAffinity()" style="width: 100%; padding: 8px 12px; background: #313244; color: #cdd6f4; border: 1px solid #45475a; border-radius: 6px; font-size: 0.9rem; outline: none;">
+            <option value="open">Open Source / Linux Heavy (Agnostic)</option>
+            <option value="microsoft">Microsoft-Centric (Windows Server, SQL Server, Active Directory)</option>
+            <option value="enterprise">Multi-Vendor / Legacy Enterprise Scale</option>
+        </select>
+    </div>
+    <div style="margin-bottom: 16px;">
+        <label style="display: block; font-weight: bold; margin-bottom: 6px; font-size: 0.9rem; color: #b4befe;">2. Core Project Priority</label>
+        <select id="priority" onchange="calculateAffinity()" style="width: 100%; padding: 8px 12px; background: #313244; color: #cdd6f4; border: 1px solid #45475a; border-radius: 6px; font-size: 0.9rem; outline: none;">
+            <option value="analytics">Heavy Data Analytics, Big Data, or AI/ML pipelines</option>
+            <option value="general">General Enterprise Web App Staging & Hosting</option>
+            <option value="hybrid">Hybrid Cloud Architecture & On-Premises Interconnection</option>
+        </select>
+    </div>
+    <div style="margin-bottom: 16px;">
+        <label style="display: block; font-weight: bold; margin-bottom: 6px; font-size: 0.9rem; color: #b4befe;">3. Budget Lifecycle Philosophy</label>
+        <select id="budget" onchange="calculateAffinity()" style="width: 100%; padding: 8px 12px; background: #313244; color: #cdd6f4; border: 1px solid #45475a; border-radius: 6px; font-size: 0.9rem; outline: none;">
+            <option value="sustained">Automatic optimizations without rigid lock-in contracts</option>
+            <option value="agreement">Deep Enterprise Agreement discounts (Using existing licenses)</option>
+            <option value="granular">Granular pay-as-you-go control and complex tracking control</option>
+        </select>
+    </div>
+    <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid #45475a;">
+        <h4 style="margin-top: 0; margin-bottom: 12px; font-size: 1rem; color: #f5e0dc;">📊 Dynamic Cloud Affinity Matrix</h4>
+        <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px;">
+                <span>Amazon Web Services (AWS)</span>
+                <span id="aws-pct" style="font-weight: bold; color: #fab387;">33%</span>
+            </div>
+            <div style="width: 100%; background: #313244; height: 8px; border-radius: 4px; overflow: hidden;">
+                <div id="aws-bar" style="background: #fab387; width: 33%; height: 100%; transition: width 0.4s ease;"></div>
+            </div>
+        </div>
+        <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px;">
+                <span>Microsoft Azure</span>
+                <span id="azure-pct" style="font-weight: bold; color: #89b4fa;">33%</span>
+            </div>
+            <div style="width: 100%; background: #313244; height: 8px; border-radius: 4px; overflow: hidden;">
+                <div id="azure-bar" style="background: #89b4fa; width: 33%; height: 100%; transition: width 0.4s ease;"></div>
+            </div>
+        </div>
+        <div style="margin-bottom: 16px;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; margin-bottom: 4px;">
+                <span>Google Cloud Platform (GCP)</span>
+                <span id="gcp-pct" style="font-weight: bold; color: #a6e3a1;">34%</span>
+            </div>
+            <div style="width: 100%; background: #313244; height: 8px; border-radius: 4px; overflow: hidden;">
+                <div id="gcp-bar" style="background: #a6e3a1; width: 34%; height: 100%; transition: width 0.4s ease;"></div>
+            </div>
+        </div>
+    </div>
+    <div style="background: #313244; border-left: 4px solid #f9e2af; padding: 12px 16px; border-radius: 0 6px 6px 0; margin-top: 16px;">
+        <span style="font-weight: bold; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.5px; color: #f9e2af; display: block; margin-bottom: 4px;">Architectural Guidance</span>
+        <p id="rationale" style="margin: 0; font-size: 0.85rem; color: #cdd6f4; line-height: 1.4;">Balanced ecosystem settings. Modify selections above to generate target runtime insights.</p>
+    </div>
+</div>
 
-<details>
-<summary><b>Step 2: Select Your Core Architectural Priority</b></summary>
-<blockquote style="margin-top: 10px;">
-  <form>
-    <input type="radio" id="pri-ai" name="priority" value="gcp">
-    <label for="pri-ai"><b>Advanced Data Analytics, Core AI, & Managed MLOps Pipelines</b></label><br><br>
-    
-    <input type="radio" id="pri-hy" name="priority" value="azure">
-    <label for="pri-hy"><b>Hybrid Cloud Extensions & Single Control Plane Governance</b></label><br><br>
-    
-    <input type="radio" id="pri-gl" name="priority" value="aws">
-    <label for="pri-gl"><b>Massive Global Compute Footprint & High-Availability Resiliency</b></label>
-  </form>
-</blockquote>
-</details>
+<script>
+function calculateAffinity() {
+    const stack = document.getElementById('stack').value;
+    const priority = document.getElementById('priority').value;
+    const budget = document.getElementById('budget').value;
 
-<details>
-<summary><b>Step 3: Define Budget & Financial Governance Strategy</b></summary>
-<blockquote style="margin-top: 10px;">
-  <form>
-    <input type="radio" id="bud-sus" name="budget" value="gcp">
-    <label for="bud-sus"><b>Automated Sustained Use Pricing</b> (No upfront commitments required)</label><br><br>
-    
-    <input type="radio" id="bud-ea" name="budget" value="azure">
-    <label for="bud-ea"><b>Enterprise Agreement Optimization</b> (Leverage existing licenses)</label><br><br>
-    
-    <input type="radio" id="bud-pay" name="budget" value="aws">
-    <label for="bud-pay"><b>Granular Spending Control</b> (Deep visibility via savings plans)</label>
-  </form>
-</blockquote>
-</details>
+    let aws = 30;
+    let azure = 30;
+    let gcp = 30;
+    let rationaleText = "";
 
+    // Evaluation Logic Node 1: Tech Stack
+    if (stack === 'microsoft') {
+        azure += 40;
+        aws -= 10;
+        gcp -= 20;
+        rationaleText += "Strong legacy Microsoft footprint detected. Azure features unmatched optimizations for Windows dependencies, native Entra ID integrations, and Microsoft license migrations. ";
+    } else if (stack === 'open') {
+        gcp += 25;
+        aws += 15;
+        azure -= 10;
+    } else if (stack === 'enterprise') {
+        aws += 30;
+        azure += 10;
+        gcp -= 10;
+        rationaleText += "Enterprise landscape indicates AWS as a primary anchor given its highly mature service suite and expansive global AZ mapping footprint. ";
+    }
+
+    // Evaluation Logic Node 2: Technical Priorities
+    if (priority === 'analytics') {
+        gcp += 40;
+        aws += 10;
+        azure -= 15;
+        rationaleText += "Advanced Big Data & AI workflows strongly point towards GCP. BigQuery engines combined with native Vertex AI infrastructure significantly lower processing times and orchestration complexity. ";
+    } else if (priority === 'hybrid') {
+        azure += 35;
+        gcp += 10;
+        aws -= 15;
+        rationaleText += "Hybrid topologies find maximum governance inside Azure using centralized Azure Arc control planes across distributed clusters. ";
+    } else if (priority === 'general') {
+        aws += 20;
+        azure += 10;
+    }
+
+    // Evaluation Logic Node 3: Budget Realities
+    if (budget === 'agreement') {
+        azure += 30;
+        aws -= 15;
+        gcp -= 15;
+        rationaleText += "Azure Hybrid Benefit pricing will heavily mitigate operating costs via cross-licensing execution models.";
+    } else if (budget === 'sustained') {
+        gcp += 25;
+        aws -= 10;
+    } else if (budget === 'granular') {
+        aws += 20;
+    }
+
+    // Mathematical Normalization
+    const total = aws + azure + gcp;
+    const awsFinal = Math.max(5, Math.round((aws / total) * 100));
+    const azureFinal = Math.max(5, Math.round((azure / total) * 100));
+    const gcpFinal = 100 - (awsFinal + azureFinal); // Keep math strict at 100%
+
+    // GUI UI Rendering updates
+    document.getElementById('aws-pct').innerText = awsFinal + "%";
+    document.getElementById('aws-bar').style.width = awsFinal + "%";
+    
+    document.getElementById('azure-pct').innerText = azureFinal + "%";
+    document.getElementById('azure-bar').style.width = azureFinal + "%";
+    
+    document.getElementById('gcp-pct').innerText = gcpFinal + "%";
+    document.getElementById('gcp-bar').style.width = gcpFinal + "%";
+
+    // Fallback baseline text logic handling
+    if(rationaleText === "") {
+        rationaleText = "Open-source cloud native stack settings are optimized across both GCP and AWS environments. Leverage Kubernetes (GKE) or standard EC2 clusters to preserve platform independence.";
+    }
+    document.getElementById('rationale').innerText = rationaleText;
+}
+
+// Initial fire on load
+calculateAffinity();
+</script>
 ---
 
 ### 📊 Real-Time Matrix Evaluation Key
