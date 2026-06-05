@@ -24,6 +24,7 @@ Welcome to my central infrastructure engineering log. This space serves as an ac
 | **06. Terraform & Ansible** | Idempotent Infrastructure Provisioning & Configurations | [Explore Logs](#/core-pillars/06-terraform-ansible/terraform-iac) |
 | **07. Bash Scripting** | System Telemetry, Automation Functions, Shell Traps | [Explore Logs](#/core-pillars/07-scripting/bash-devops) |
 | **08. AI in DevOps** | ML-Powered Optimization, AIOps Platforms, Agentic Workflows | [Explore Logs](#/core-pillars/08-ai-devops/ai-devops) |
+| **09. Other Tools** | Kafka | [Explore Logs](#/core-pillars/09-extra/kafka) |
 
 ---
 

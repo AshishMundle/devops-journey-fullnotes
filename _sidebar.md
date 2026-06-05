@@ -33,6 +33,9 @@
 * **08. AI in DevOps**
   * [AI in DevOps](core-pillars/08-ai-devops/ai-devops.md)
 
-* **09. Projects**
+* **09. Other Tools**
+  * [Kafka](core-pillars/09-extra/kafka.md)
+
+* **10. Projects**
   * [Multi-Cloud Smart ATS (Applicant Tracking System)](projects/multi-cloud-smart-ats/project_summary.md)
 
