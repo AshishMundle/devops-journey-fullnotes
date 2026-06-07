@@ -4,101 +4,263 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GCP Simplified Cost Estimator</title>
+    <title>GCP Provisioned Services Estimator</title>
     <style>
-        /* Reset margins and force html/body to occupy 100% viewport height */
+        /* --- Root & Layout Defaults --- */
         html,
         body {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-        }
-
-        /* Flexbox wizardry to perfectly center the child element */
-        body {
+            background-color: #0b0c10;
+            color: #e5e5e5;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f8f9fa;
-            color: #202124;
             display: flex;
             justify-content: center;
-            /* Perfect horizontal centering */
             align-items: center;
-            /* Perfect vertical centering */
-            min-height: 100vh;
             box-sizing: border-box;
-            padding: 2rem;
         }
 
-        /* Responsive card box styling */
+        /* --- Main UI Dashboard Card --- */
         .card {
-            background: white;
-            border-radius: 12px;
+            background-color: #12131c;
+            border-radius: 16px;
             padding: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
             width: 100%;
-            max-width: 850px;
-            /* Keeps the app looking clean on wide viewports */
+            max-width: 900px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
             box-sizing: border-box;
+            border: 1px solid #1f2235;
         }
 
-        /* Layout structural blocks */
         h2 {
-            border-bottom: 2px solid #4285f4;
-            padding-bottom: 0.5rem;
             margin-top: 0;
+            font-size: 1.8rem;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: -0.5px;
         }
 
+        .subtitle {
+            color: #7e84a3;
+            margin-bottom: 2.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* --- Flex Control Layout Rows --- */
         .control-group {
-            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid #1f2235;
+            gap: 2rem;
         }
 
-        label {
-            font-weight: 500;
+        .control-group:last-of-type {
+            border-bottom: none;
+        }
+
+        .label-block {
             flex: 1;
         }
 
-        .slider-container {
-            flex: 2;
+        .label-block label {
+            font-weight: 500;
+            font-size: 1rem;
+            color: #f1f2f6;
+            display: block;
+        }
+
+        .label-block small {
+            color: #7e84a3;
+            font-size: 0.85rem;
+            display: block;
+            margin-top: 0.2rem;
+        }
+
+        /* --- Image 2: Custom Digital Counter Steppers --- */
+        .stepper {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            background-color: #1a1c28;
+            border-radius: 25px;
+            padding: 0.3rem;
+            border: 1px solid #2d314d;
+            width: 180px;
+            justify-content: space-between;
         }
 
-        input[type="range"] {
-            flex: 1;
+        .stepper button {
+            background-color: #25283c;
+            border: none;
+            color: #ffffff;
+            font-size: 1.2rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
             cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.1s;
         }
 
-        .value-display {
-            width: 50px;
-            text-align: right;
-            font-family: monospace;
-            font-size: 1.1rem;
+        .stepper button:hover {
+            background-color: #313552;
+        }
+
+        .stepper button:active {
+            transform: scale(0.92);
+        }
+
+        .stepper .value-display {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.2rem;
             font-weight: bold;
-        }
-
-        .summary {
-            margin-top: 2rem;
-            padding: 1.5rem;
-            background: #e8f0fe;
-            border-radius: 8px;
+            color: #ffffff;
+            width: 60px;
             text-align: center;
         }
 
-        .total-cost {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #1a73e8;
-            margin: 0.5rem 0;
+        /* --- Multi-Input Storage Suite (Slider + Input + Unit Selection) --- */
+        .storage-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 2;
+            justify-content: flex-end;
         }
 
-        .high-cost {
-            color: #d93025;
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 220px;
+            height: 6px;
+            background: #25283c;
+            border-radius: 3px;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #4285f4;
+            cursor: pointer;
+            transition: transform 0.1s;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .storage-numeric-input {
+            background-color: #1a1c28;
+            border: 1px solid #2d314d;
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 0.5rem;
+            width: 60px;
+            text-align: center;
+            font-size: 1rem;
+            font-family: monospace;
+        }
+
+        /* Remove spin arrows from input number fields */
+        .storage-numeric-input::-webkit-outer-spin-button,
+        .storage-numeric-input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .unit-select {
+            background-color: #25283c;
+            border: 1px solid #2d314d;
+            color: #ffffff;
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            outline: none;
+            font-weight: 500;
+        }
+
+        /* --- Image 1: Dynamic Relative Cost Bar Chart Layout --- */
+        .chart-section {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 2px dashed #1f2235;
+        }
+
+        .chart-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .chart-row {
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+
+        .chart-label {
+            width: 180px;
+            color: #a0a5c1;
+            font-weight: 500;
+        }
+
+        .chart-bar-wrapper {
+            flex: 1;
+            background-color: transparent;
+            margin: 0 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .chart-bar {
+            height: 24px;
+            border-radius: 6px;
+            width: 0%;
+            /* Adjusted dynamically via Javascript */
+            transition: width 0.4s cubic-bezier(0.1, 0.8, 0.3, 1);
+            min-width: 4px;
+        }
+
+        .chart-value {
+            width: 60px;
+            text-align: right;
             font-weight: bold;
+            color: #ffffff;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+
+        /* --- Total Metrics Output Block --- */
+        .summary-panel {
+            text-align: center;
+            background: linear-gradient(135deg, #16192b 0%, #0f111e 100%);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid #22263f;
+        }
+
+        .summary-panel h3 {
+            margin: 0;
+            color: #7e84a3;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .total-display {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin: 0.5rem 0;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         }
     </style>
 </head>
@@ -107,90 +269,184 @@
 
     <div class="card">
         <h2>GCP Provisioned Services Estimator</h2>
-        <p>Adjust the quantities below to see how provisioned, "Always On" services impact your monthly bill.</p>
+        <div class="subtitle">Adjust parameters down below to evaluate production-scale background runtime billing
+            components.</div>
 
         <div class="control-group">
-            <label>Compute VMs (e2-standard-2) <br><small>$48/mo each</small></label>
-            <div class="slider-container">
-                <input type="range" id="vmSlider" min="0" max="20" value="0" oninput="calculateCost()">
+            <div class="label-block">
+                <label>Compute Engine (VM)</label>
+                <small>e2-standard-2 • $48.00/mo each</small>
+            </div>
+            <div class="stepper">
+                <button type="button" onclick="adjustValue('vm', -1)">−</button>
                 <div class="value-display" id="vmVal">0</div>
+                <button type="button" onclick="adjustValue('vm', 1)">+</button>
             </div>
         </div>
 
         <div class="control-group">
-            <label>Cloud SQL Databases <br><small>$15/mo each</small></label>
-            <div class="slider-container">
-                <input type="range" id="sqlSlider" min="0" max="10" value="0" oninput="calculateCost()">
-                <div class="value-display" id="sqlVal">0</div>
+            <div class="label-block">
+                <label>Load Balancers</label>
+                <small>External Rules Context • $18.00/mo each</small>
             </div>
-        </div>
-
-        <div class="control-group">
-            <label>Load Balancers <br><small>$18/mo each</small></label>
-            <div class="slider-container">
-                <input type="range" id="lbSlider" min="0" max="10" value="0" oninput="calculateCost()">
+            <div class="stepper">
+                <button type="button" onclick="adjustValue('lb', -1)">−</button>
                 <div class="value-display" id="lbVal">0</div>
+                <button type="button" onclick="adjustValue('lb', 1)">+</button>
             </div>
         </div>
 
         <div class="control-group">
-            <label>Reserved Static IPs <br><small>$3/mo each</small></label>
-            <div class="slider-container">
-                <input type="range" id="ipSlider" min="0" max="20" value="0" oninput="calculateCost()">
+            <div class="label-block">
+                <label>Cloud SQL (DB)</label>
+                <small>Standard High Availability • $15.00/mo each</small>
+            </div>
+            <div class="stepper">
+                <button type="button" onclick="adjustValue('sql', -1)">−</button>
+                <div class="value-display" id="sqlVal">0</div>
+                <button type="button" onclick="adjustValue('sql', 1)">+</button>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <div class="label-block">
+                <label>Reserved IP</label>
+                <small>Unassigned Idle Penalty Context • $3.00/mo each</small>
+            </div>
+            <div class="stepper">
+                <button type="button" onclick="adjustValue('ip', -1)">−</button>
                 <div class="value-display" id="ipVal">0</div>
+                <button type="button" onclick="adjustValue('ip', 1)">+</button>
             </div>
         </div>
 
         <div class="control-group">
-            <label>Cloud Storage (TB) <br><small>$20/mo per TB</small></label>
-            <div class="slider-container">
-                <input type="range" id="storageSlider" min="0" max="50" value="0" oninput="calculateCost()">
-                <div class="value-display" id="storageVal">0</div>
+            <div class="label-block">
+                <label>Cloud Storage</label>
+                <small>Standard Tier Storage • Base Flat Rate Metrics</small>
+            </div>
+            <div class="storage-container">
+                <input type="range" id="storageSlider" min="0" max="100" value="0"
+                    oninput="synchronizeStorage('slider')">
+                <input type="number" id="storageInput" class="storage-numeric-input" min="0" value="0"
+                    oninput="synchronizeStorage('input')">
+                <select id="storageUnit" class="unit-select" onchange="runCalculations()">
+                    <option value="GB">GB</option>
+                    <option value="TB" selected>TB</option>
+                </select>
             </div>
         </div>
 
-        <div class="summary">
-            <h3>Estimated Monthly Cost</h3>
-            <div class="total-cost">$<span id="totalDisplay">0</span></div>
-            <div id="warningMessage"></div>
+        <div class="chart-section">
+            <div class="chart-container">
+                <div class="chart-row" id="row-vm">
+                    <div class="chart-label">Compute Engine (VM)</div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="background-color: #fbc490;"></div>
+                    </div>
+                    <div class="chart-value" id="chart-vm-cost">$0</div>
+                </div>
+                <div class="chart-row" id="row-lb">
+                    <div class="chart-label">Load Balancer</div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="background-color: #d6cc5c;"></div>
+                    </div>
+                    <div class="chart-value" id="chart-lb-cost">$0</div>
+                </div>
+                <div class="chart-row" id="row-sql">
+                    <div class="chart-label">Cloud SQL (DB)</div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="background-color: #b3d674;"></div>
+                    </div>
+                    <div class="chart-value" id="chart-sql-cost">$0</div>
+                </div>
+                <div class="chart-row" id="row-ip">
+                    <div class="chart-label">Reserved IP</div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="background-color: #6b90f4;"></div>
+                    </div>
+                    <div class="chart-value" id="chart-ip-cost">$0</div>
+                </div>
+                <div class="chart-row" id="row-storage">
+                    <div class="chart-label">Cloud Storage</div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" style="background-color: #a77bf3;"></div>
+                    </div>
+                    <div class="chart-value" id="chart-storage-cost">$0</div>
+                </div>
+            </div>
+
+            <div class="summary-panel">
+                <h3>Total Estimated Monthly Cost</h3>
+                <div class="total-display">$<span id="aggregatedTotal">0</span></div>
+            </div>
         </div>
     </div>
 
     <script>
-        function calculateCost() {
-            const vms = parseInt(document.getElementById('vmSlider').value);
-            const sql = parseInt(document.getElementById('sqlSlider').value);
-            const lb = parseInt(document.getElementById('lbSlider').value);
-            const ips = parseInt(document.getElementById('ipSlider').value);
-            const storage = parseInt(document.getElementById('storageSlider').value);
+        // System core parameters tracking architecture state
+        const state = { vm: 0, lb: 0, sql: 0, ip: 0, storage: 0 };
+        const pricing = { vm: 48, lb: 18, sql: 15, ip: 3, storageTB: 20, storageGB: 0.02 };
 
-            // Update displays
-            document.getElementById('vmVal').innerText = vms;
-            document.getElementById('sqlVal').innerText = sql;
-            document.getElementById('lbVal').innerText = lb;
-            document.getElementById('ipVal').innerText = ips;
-            document.getElementById('storageVal').innerText = storage;
-
-            // Calculate
-            const vmCost = vms * 48;
-            const sqlCost = sql * 15;
-            const lbCost = lb * 18;
-            const ipCost = ips * 3;
-            const storageCost = storage * 20;
-
-            const total = vmCost + sqlCost + lbCost + ipCost + storageCost;
-            document.getElementById('totalDisplay').innerText = total.toLocaleString();
-
-            // High cost warning logic
-            const warningEl = document.getElementById('warningMessage');
-            if (vmCost > total * 0.5 && total > 0) {
-                warningEl.innerHTML = "<span class='high-cost'>⚠️ Compute Engine is driving over 50% of your costs!</span>";
-            } else if (storageCost > total * 0.5 && total > 0) {
-                warningEl.innerHTML = "<span class='high-cost'>⚠️ Storage is driving over 50% of your costs! Check lifecycle policies.</span>";
-            } else {
-                warningEl.innerHTML = "";
-            }
+        function adjustValue(key, step) {
+            state[key] = Math.max(0, state[key] + step);
+            document.getElementById(`${key}Val`).innerText = state[key];
+            runCalculations();
         }
+
+        function synchronizeStorage(origin) {
+            const slider = document.getElementById('storageSlider');
+            const input = document.getElementById('storageInput');
+
+            if (origin === 'slider') {
+                state.storage = parseInt(slider.value) || 0;
+                input.value = state.storage;
+            } else if (origin === 'input') {
+                state.storage = Math.max(0, parseInt(input.value) || 0);
+                slider.value = state.storage > 100 ? 100 : state.storage; // Cap slider handle visuals safely
+            }
+            runCalculations();
+        }
+
+        function runCalculations() {
+            const unit = document.getElementById('storageUnit').value;
+
+            // Cost calculations
+            const costs = {
+                vm: state.vm * pricing.vm,
+                lb: state.lb * pricing.lb,
+                sql: state.sql * pricing.sql,
+                ip: state.ip * pricing.ip,
+                storage: state.storage * (unit === 'TB' ? pricing.storageTB : pricing.storageGB)
+            };
+
+            const totalCost = Object.values(costs).reduce((acc, curr) => acc + curr, 0);
+            document.getElementById('aggregatedTotal').innerText = Math.round(totalCost).toLocaleString();
+
+            // Calculate maximum value to determine chart proportions cleanly
+            const maxSingleCost = Math.max(...Object.values(costs), 1);
+
+            // Dynamic rendering logic for bar chart widths and metrics
+            Object.keys(costs).forEach(key => {
+                const rowCost = costs[key];
+                const barElement = document.querySelector(`#row-${key} .chart-bar`);
+                const costDisplay = document.getElementById(`chart-${key}-cost`);
+
+                // Format tracking strings
+                costDisplay.innerText = `$${Math.round(rowCost)}`;
+
+                // Proportional width allocation mapping relative to maximum expense channel
+                if (rowCost > 0) {
+                    const calculatedPercentage = (rowCost / maxSingleCost) * 100;
+                    barElement.style.width = `${calculatedPercentage}%`;
+                } else {
+                    barElement.style.width = `0%`;
+                }
+            });
+        }
+
+        // Run initial configuration diagnostics on execution boot context
+        runCalculations();
     </script>
 
 </body>
