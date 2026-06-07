@@ -6,25 +6,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GCP Simplified Cost Estimator</title>
     <style>
+        /* Reset margins and force html/body to occupy 100% viewport height */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Flexbox wizardry to perfectly center the child element */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f8f9fa;
             color: #202124;
+            display: flex;
+            justify-content: center;
+            /* Perfect horizontal centering */
+            align-items: center;
+            /* Perfect vertical centering */
+            min-height: 100vh;
+            box-sizing: border-box;
             padding: 2rem;
-            max-width: 800px;
-            margin: 0 auto;
         }
 
+        /* Responsive card box styling */
         .card {
             background: white;
-            border-radius: 8px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 850px;
+            /* Keeps the app looking clean on wide viewports */
+            box-sizing: border-box;
         }
 
+        /* Layout structural blocks */
         h2 {
             border-bottom: 2px solid #4285f4;
             padding-bottom: 0.5rem;
+            margin-top: 0;
         }
 
         .control-group {
@@ -48,6 +70,7 @@
 
         input[type="range"] {
             flex: 1;
+            cursor: pointer;
         }
 
         .value-display {
@@ -55,6 +78,7 @@
             text-align: right;
             font-family: monospace;
             font-size: 1.1rem;
+            font-weight: bold;
         }
 
         .summary {
