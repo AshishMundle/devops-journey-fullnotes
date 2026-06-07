@@ -10,8 +10,8 @@
 * **03. Popular Cloud Services**
   * [Cloud Comparision](core-pillars/03-cloud-services/cloud-introductions.md)
   * [AWS Services](core-pillars/03-cloud-services/aws-services.md)
-  * [GCP Services (COMING SOON)]
   * [Azure Services](core-pillars/03-cloud-services/azure-services.md)
+  * [GCP Services](core-pillars/03-cloud-services/gcp-services.md)
 
 * **04. Git ➔ Jenkins**
   * [Advanced Git Workflows](core-pillars/04-git-jenkins/git-workflows.md)
@@ -37,5 +37,5 @@
   * [Kafka](core-pillars/09-extra/kafka.md)
 
 * **10. Projects**
-  * [Multi-Cloud Smart ATS (Applicant Tracking System)](projects/multi-cloud-smart-ats/project_summary.md)
+  * [Multi-Cloud Smart ATS (Applicant Tracking System)](projects/multi-cloud-smart-ats/ATS-project_summary.md)
 
