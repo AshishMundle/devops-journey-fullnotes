@@ -38,4 +38,5 @@
 
 * **10. Projects**
   * [Multi-Cloud Smart ATS (Applicant Tracking System)](projects/multi-cloud-smart-ats/ATS-project_summary.md)
+  * [Enterprise CI/CD Infrastructure Architecture](projects/Enterprise-CI-CD-Infrastructure-Architecture/e2e-pipeline.md)
 
