@@ -46,9 +46,9 @@ Before Terraform can programmatically manipulate cloud resources, your local wor
 1. **IAM Security Provisioning:** Create an IAM user named `terraform43` via the AWS Web Console with **Programmatic Access**. Attach the `AdministratorAccess` policy to its group.
 2. **Access Key Generation:** Generate a CLI Access Key pair and secure the resulting `.csv` file.
 3. **Local Workstation Configuration:** Execute the setup wizard within your terminal:
+
 ```bash
 aws configure
-
 ```
 
 
@@ -60,7 +60,6 @@ The core pipeline acts as a deterministic state machine, safely migrating your l
 
 ```
 [Local Code Layout (.tf)] ---> [terraform init] ---> [terraform validate] ---> [terraform plan] ---> [terraform apply]
-
 ```
 
 #### Step 1: Initialization (`terraform init`)
@@ -531,7 +530,6 @@ When executing configurations through isolated automated runners (such as GitHub
 
 ```bash
 terraform apply --auto-approve
-
 ```
 
 ---
@@ -542,9 +540,9 @@ terraform apply --auto-approve
 
 * **Q:** You execute a fresh `terraform plan` and the engine states that three new infrastructure resources must be provisioned. However, inspecting your cloud provider console reveals those identical resources *already exist* because they were constructed manually by another engineer last week. How do you reconcile this split without losing resources or creating duplicates?
 * **A:** Terraform is completely unaware of any live cloud changes unless they are indexed inside its tracking file. To fix this, map the pre-existing hardware components back into your declarative state ledger without duplicate creation loops by running the import subcommand:
+
 ```bash
 terraform import <resource_type>.<resource_name> <actual_live_resource_id>
-
 ```
 
 
@@ -592,6 +590,7 @@ terraform import <resource_type>.<resource_name> <actual_live_resource_id>
 ### 5. What does a "State Lock Error" indicate, and how do you clear it safely?
 
 > **Answer:** A State Lock Error indicates that another process or team member is actively running a state mutation loop (`plan`, `apply`, or `destroy`) against that precise state configuration backend. This mechanic prevents concurrent writes from corrupting the state file. If a system crash leaves a remote lock stranded open, it can be cleared manually using:
+
 ```bash
 terraform force-unlock <LOCK_ID>
 ```
