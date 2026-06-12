@@ -1,4 +1,6 @@
-# 🚀 Engineering Dashboard: The DevOps Journey     https://nitesh-dudhe.github.io/devops-journey/#/core-pillars/01-devops-intro/devops-introductions
+# 🚀 Engineering Dashboard: The DevOps Journey     
+[DevOps Introduction](https://nitesh-dudhe.github.io/devops-journey/#/core-pillars/01-devops-intro/devops-introductions)
+
 
 Welcome to my central infrastructure engineering log. This space serves as an active repository of documentation, technical deep-dives, configurations, and scripts tracking my progress through the core disciplines of cloud automation and site reliability engineering.
 
